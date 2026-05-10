@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frutiger Aero</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="Imagens/Icon1.webp" alt="Frutiger Aero Logo">
+            <h1>Frutiger Aero</h1>
+        </div>
+        <nav class="nav-btn" id="nav-btn">
+            <button class="btn-menu" id="btn-menu">Menu</button>
+            <button class="btn-mensagens" id="btn-mensagens">Mensagens</button>
+        </nav>
+        <div class="container-view" id="container-view">
+            <button class="view" id="view"><img src="SVGs/eye-svgrepo-com.svg"></button>
+        </div>
+    </header>
+    <aside class="sidebar-esquerda">
+        <div class="container-widget" id="container-widget">
+            <header class="btn-widget" id="btn-widget">
+                <button class="btn-relogio" id="btn-relogio"><img src="Windows 7 Icons/370.png"></button>
+                <button class="btn-calendario" id="btn-calendario"><img src="Windows 7 Icons/398.png"></button>
+                <button class="btn-nota" id="btn-nota"><img src="Windows 7 Icons/092.png"></button>
+            </header>
+            <div class="widget-visualizações" id="widget-visualizações">
+                <div class="container-relogio" id="container-relogio">
+                    <div class="reflexo" id="reflexo"></div>
+                    <h2 id="horario">00:00:00</h2>
+                </div>
+                <div class="container-calendario" id="container-calendario">
+                    <h2 id="data">00/00/0000</h2>
+                </div>
+            </div>
+            <div class="container-nota" id="container-nota">
+                <div class="notas"></div>
+            </div>
+        </div>
+        <div class="container-musica" id="container-musica">
+            <img src="Windows 7 Icons/517.png">
+            <button><img src="Windows 7 Icons/469.png"></button>
+            <button class="pause" id="pause"><img src="Windows 7 Icons/472.png"></button>
+            <button><img src="Windows 7 Icons/481.png"></button>
+        </div>
+    </aside>
+    <main>
+        <header id="header-main">
+            <h3 id="nome-contato"></h3>
+        </header>
+        <div class="mensagens" id="mensagens">
+        <div class="container-mensagem" id="container-mensagem"></div>
+        </div>
+        <input type="text" class="input" id="input" placeholder="Mensagem">
+    </main>
+    <aside class="sidebar-direita">
+        <header>
+            <button class="open-sidebar" id="open-sidebar"><img src="SVGs/menu-svgrepo-com - cópia.svg"></button>
+            <button class="add" id="add"><img src="Windows 7 Icons/508.png"></button>
+        </header>
+        <div class="container-btn-sidebar-direita">
+            <button class="nova-nota" id="nova-nota">Nova Nota</button>
+            <button class="links" id="links">Links Favoritos</button>
+            <button class="mensagem-rapida" id="mensagem-rapida">Mensagem Rápida</button>
+        </div>
+        <div class="input-area" id="input-area">
+            <input type="text" id="input-nota" placeholder="Digite sua Nota">
+            <div class="lista-contatos" id="lista-contatos"></div>
+            <input type="text" id="input-mensagem" placeholder="Digite sua mensagem">
+            <input type="number" id="input-numero" placeholder="Número">
+            <input type="text" id="input-nome" placeholder="nome">
+        </div>
+    </aside>
+</body>
+
+</html>
