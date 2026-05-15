@@ -1,0 +1,79 @@
+/* body */
+
+body {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 100px 1fr;
+    grid-template-areas:
+    "header header header"
+    "main main main";
+}
+
+/* headers */
+
+header {
+    grid-area: header;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-widget img {
+    height: 30px;
+}
+
+.header-widget {
+    display: flex;
+    flex-direction: row;
+}
+
+.logo {
+    display: flex;
+}
+
+.logo img {
+    height: 70px;
+}
+
+.view img {
+    height: 40px;
+}
+
+/* Mensagens */
+
+article {
+    grid-area: mensagens;
+    display: none;
+}
+
+main {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 150px 1fr 50px;
+    grid-template-areas:
+    "sidebarE mensagens sidebarD";
+}
+
+/* barra lateral esquerda */
+
+.sidebar-esquerda {
+    grid-area: sidebarE;
+}
+
+.open-sidebar img {
+    height: 30px;
+    width: 30px;
+}
+
+.musica-btn {
+    display: flex;
+}
+
+/* barra lateral direita */
+
+.sidebar-direita {
+    grid-area: sidebarD;
+}
+
+/* geral */
