@@ -1,15 +1,100 @@
 /* body */
 
+:root {
+    /* ☁️ Fundo do céu */
+    --sky-light: #dff6ff;
+    --sky-blue: #b8ecff;
+    --sky-deep: #7fd8ff;
+
+    /* 🌊 Água / Aqua */
+    --aqua-light: #7be7ff;
+    --aqua-main: #53c7ff;
+    --aqua-dark: #009dff;
+
+    /* 🌱 Natureza */
+    --green-light: #a8ffcb;
+    --green-main: #66e6a3;
+    --green-dark: #2ecc71;
+
+    /* ☀️ Luz */
+    --light-white: #ffffff;
+    --light-soft: #f3fdff;
+    --light-glow: rgba(255, 255, 255, 0.8);
+
+    /* 💎 Glass */
+    --glass-bg: rgba(255, 255, 255, 0.16);
+    --glass-border: rgba(255, 255, 255, 0.35);
+
+    /* 🌌 Fundo escuro suave */
+    --deep-blue: #1d3b53;
+    --deep-ocean: #102838;
+
+    /* ✨ Glow */
+    --glow-blue: rgba(83, 199, 255, 0.7);
+    --glow-cyan: rgba(123, 231, 255, 0.7);
+    --glow-green: rgba(102, 230, 163, 0.6);
+
+    /* 🌈 Gradientes */
+    --gradient-sky:
+        linear-gradient(180deg,
+            #dff6ff,
+            #7fd8ff);
+
+    --gradient-water:
+        linear-gradient(135deg,
+            #7be7ff,
+            #53c7ff,
+            #009dff);
+
+    --gradient-nature:
+        linear-gradient(135deg,
+            #a8ffcb,
+            #53c7ff);
+
+    /* 🫧 Reflexo */
+    --reflection:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.65),
+            transparent);
+
+    /* 🌫️ Sombras */
+    --shadow-soft:
+        0 0 20px rgba(83, 199, 255, 0.25);
+
+    --shadow-medium:
+        0 0 30px rgba(83, 199, 255, 0.4);
+
+    --shadow-strong:
+        0 0 45px rgba(83, 199, 255, 0.55);
+
+}
+
 body {
     height: 100vh;
     display: grid;
-    grid-template-rows: 100px 1fr;
+    grid-template-rows: 90px 1fr;
     grid-template-areas:
-    "header header header"
-    "main main main";
+        "header header header"
+        "main main main";
+
+    background: linear-gradient(to bottom rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08));
+    background-image: url(Imagens/Fundo\ Frutiger\ aero.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    backdrop-filter: blur(1px);
+    gap: 10px;
+    color: #eefcff;
+    font-family: "Segoe UI", sans-serif;
 }
 
-/* headers */
+* {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* barra superior */
 
 header {
     grid-area: header;
@@ -19,13 +104,53 @@ header {
     align-items: center;
 }
 
-.header-widget img {
-    height: 30px;
+.header-body {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 999px;
+    padding: 0 20px;
+    position: relative;
 }
 
-.header-widget {
+.header-body::before {
+    content: "";
+    width: 100%;
+    background: var(--reflection);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50%;
+    border-radius: 999px 999px 0 0;
+}
+
+.nav-btn {
+    transform: translateX(-50%);
     display: flex;
     flex-direction: row;
+    gap: 10px;
+    position: relative;
+}
+
+.nav-btn::before {
+    content: "";
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    position: absolute;
+    width: 100px;
+    height: 50%;
+    top: 5px;
+    right: 125px;
+    padding: 10px;
+    border-radius: 999px;
+    transition: all 0.4s ease;
+}
+
+.nav-btn button {
+    font-size: 18px;
+    padding: 20px;
 }
 
 .logo {
@@ -50,30 +175,289 @@ article {
 main {
     grid-area: main;
     display: grid;
-    grid-template-columns: 150px 1fr 50px;
+    grid-template-columns: auto 1fr 220px;
     grid-template-areas:
-    "sidebarE mensagens sidebarD";
+        "sidebarE mensagens sidebarD";
 }
 
 /* barra lateral esquerda */
 
 .sidebar-esquerda {
     grid-area: sidebarE;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.open-sidebar img {
+.container-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.header-widget img {
     height: 30px;
-    width: 30px;
+}
+
+.header-widget {
+    display: flex;
+    flex-direction: row;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    padding: 5px 10px;
+    position: relative;
+    max-width: 250px;
+}
+
+.header-widget::before {
+    content: "";
+    position: absolute;
+    background: var(--reflection);
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 999px;
+}
+
+.widget-visualizações {
+    display: flex;
+    flex-direction: row;
+}
+
+.container-relogio {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    height: 250px;
+    width: 250px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.container-relogio::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50%;
+    background: var(--reflection);
+    border-radius: 20px;
+}
+
+#horario {
+    font-size: 35px;
+    text-shadow: 0 0 10px var(--glow-blue);
+}
+
+.container-calendario {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    height: 250px;
+    width: 250px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    opacity: 0;
+}
+
+.container-calendario::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50%;
+    background: var(--reflection);
+    border-radius: 20px;
+}
+
+#data {
+    font-size: 35px;
+    text-shadow: 0 0 10px var(--glow-blue);
+}
+
+.container-musica {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 320px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    position: relative;
+}
+
+.container-musica::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    top: 0;
+    left: 0;
+    border-radius: 20px;
+    background: var(--reflection);
+}
+
+.musica-icone {
+    height: 220px;
 }
 
 .musica-btn {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    border-top: 1px solid var(--glass-border);
+}
+
+.musica-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px 20px 0 0; 
+    background: var(--reflection);
+    transform: rotate(180deg);
 }
 
 /* barra lateral direita */
 
 .sidebar-direita {
     grid-area: sidebarD;
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.header-menu {
+    margin-bottom: 15px;
+    padding: 5px;
+    background: var(--glass-bg);
+    border-bottom: 1px solid var(--glass-border);
+    border-radius: 20px 20px 0 0;
+    height: 60px;
+    position: relative;
+}
+
+.header-menu::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: var(--reflection);
+    top: 0;
+    left: 0;
+    border-radius: 20px 20px 0 0;
+}
+
+.container-btn-sidebar-direita {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.container-btn-sidebar-direita button {
+    font-size: 17px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    width: 11vw;
+    height: 5vh;
+    backdrop-filter: blur(10px);
+    position: relative;
+    box-shadow: 0 0 10px var(--glow-blue);
+}
+
+.container-btn-sidebar-direita button::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--reflection);
+    transform: rotate(180deg);
+    border-radius: 20px;
+    left: 0;
+    top: 0;
+}
+
+.add img {
+    height: 40px;
+}
+
+.open-sidebar img {
+    height: 40px;
+    width: 40px;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 5));
+}
+
+.input-area {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(30px);
+}
+
+.lista-contatos {
+    height: 150px;
+    width: 150px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.lista-contatos::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background: var(--reflection);
 }
 
 /* geral */
+
+button {
+    color: #eefcff;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+}
+
+input::placeholder {
+    color: #eefcff;
+}
+
+input {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 12px;
+    border-radius: 20px;
+    position: relative;
+    outline: none;
+    box-shadow: 0 0 10px var(--glow-cyan);
+}
