@@ -87,6 +87,7 @@ body {
     gap: 10px;
     color: #eefcff;
     font-family: "Segoe UI", sans-serif;
+    transition: all 0.3s ease;
 }
 
 * {
@@ -112,6 +113,7 @@ header {
     border-radius: 999px;
     padding: 0 20px;
     position: relative;
+    transition: 0.4s ease;
 }
 
 .header-body::before {
@@ -123,14 +125,16 @@ header {
     left: 0;
     height: 50%;
     border-radius: 999px 999px 0 0;
+    pointer-events: none;
 }
 
 .nav-btn {
-    transform: translateX(-50%);
     display: flex;
     flex-direction: row;
     gap: 10px;
-    position: relative;
+    position: fixed;
+    transform: translateX(250%);
+    transition: all 0.4s ease;
 }
 
 .nav-btn::before {
@@ -146,6 +150,8 @@ header {
     padding: 10px;
     border-radius: 999px;
     transition: all 0.4s ease;
+    pointer-events: none;
+
 }
 
 .nav-btn button {
@@ -165,6 +171,10 @@ header {
     height: 40px;
 }
 
+.view {
+    transition: all 0.4s ease;
+}
+
 /* Mensagens */
 
 article {
@@ -173,9 +183,10 @@ article {
 }
 
 main {
+    transition: all 0.4s ease;
     grid-area: main;
     display: grid;
-    grid-template-columns: auto 1fr 220px;
+    grid-template-columns: auto 1fr 50px;
     grid-template-areas:
         "sidebarE mensagens sidebarD";
 }
@@ -187,6 +198,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    transition: all 0.4s ease;
 }
 
 .container-widget {
@@ -213,12 +225,13 @@ main {
 .header-widget::before {
     content: "";
     position: absolute;
-    background: var(--reflection);
     width: 100%;
     height: 100%;
-    left: 0;
     top: 0;
+    left: 0;
     border-radius: 999px;
+    background: var(--reflection);
+    pointer-events: none;
 }
 
 .widget-visualizações {
@@ -236,6 +249,8 @@ main {
     justify-content: center;
     align-items: center;
     position: relative;
+    transition: all 0.4s ease;
+    transform: translateX(0);
 }
 
 .container-relogio::before {
@@ -247,6 +262,7 @@ main {
     height: 50%;
     background: var(--reflection);
     border-radius: 20px;
+    pointer-events: none;
 }
 
 #horario {
@@ -265,6 +281,8 @@ main {
     align-items: center;
     position: relative;
     opacity: 0;
+    transition: all 0.4s ease;
+    transform: translateX(0);
 }
 
 .container-calendario::before {
@@ -276,11 +294,39 @@ main {
     height: 50%;
     background: var(--reflection);
     border-radius: 20px;
+    pointer-events: none;
 }
 
 #data {
     font-size: 35px;
     text-shadow: 0 0 10px var(--glow-blue);
+}
+
+.container-nota {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    height: 250px;
+    width: 250px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    opacity: 0;
+    transition: all 0.4s ease;
+    transform: translateX(-100%);
+    overflow-y: auto;
+}
+
+.container-nota::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50%;
+    background: var(--reflection);
+    border-radius: 20px;
+    pointer-events: none;
 }
 
 .container-musica {
@@ -305,6 +351,7 @@ main {
     left: 0;
     border-radius: 20px;
     background: var(--reflection);
+    pointer-events: none;
 }
 
 .musica-icone {
@@ -328,9 +375,94 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 20px 20px 0 0; 
+    border-radius: 20px 20px 0 0;
     background: var(--reflection);
     transform: rotate(180deg);
+    pointer-events: none;
+}
+
+.container-notas {
+    background: var(--glass-bg);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0;
+    text-shadow: 0 0 10px var(--sky-deep);
+    padding: 5px;
+    border-bottom: 1px solid var(--glass-border);
+    font-size: 20px;
+    position: relative;
+}
+
+.container-notas p {
+    width: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.container-inferior {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    opacity: 0;
+}
+
+.container-btns {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.container-btnmais {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-btns button {
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+
+.btn-editar {
+    background: var(--green-dark);
+}
+
+.btn-excluir {
+    background-color: red;
+}
+
+.btn-mais {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 7px 10px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.btn-mais::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--reflection);
+    border-radius: 20px;
+}
+
+.container-notas::before {
+    content: "";
+    position: absolute;
+}
+
+#sem-notas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* barra lateral direita */
@@ -343,6 +475,8 @@ main {
     border-radius: 20px;
     position: relative;
     z-index: 2;
+    transition: all 0.4s ease;
+    width: 50px;
 }
 
 .header-menu {
@@ -364,6 +498,13 @@ main {
     top: 0;
     left: 0;
     border-radius: 20px 20px 0 0;
+    pointer-events: none;
+}
+
+.add {
+    opacity: 0;
+    transition: all 0.4s ease;
+    display: none;
 }
 
 .container-btn-sidebar-direita {
@@ -384,6 +525,8 @@ main {
     backdrop-filter: blur(10px);
     position: relative;
     box-shadow: 0 0 10px var(--glow-blue);
+    opacity: 0;
+    transition: all 0.4s ease;
 }
 
 .container-btn-sidebar-direita button::before {
@@ -396,6 +539,7 @@ main {
     border-radius: 20px;
     left: 0;
     top: 0;
+    pointer-events: none;
 }
 
 .add img {
@@ -433,6 +577,17 @@ main {
     width: 100%;
     height: 50%;
     background: var(--reflection);
+    pointer-events: none;
+}
+
+.input-area textarea {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 12px;
+    border-radius: 20px;
+    position: relative;
+    outline: none;
+    box-shadow: 0 0 10px var(--glow-cyan);
 }
 
 /* geral */
@@ -448,16 +603,152 @@ button {
     outline: none;
 }
 
-input::placeholder {
+textarea::placeholder {
     color: #eefcff;
 }
 
-input {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    padding: 12px;
-    border-radius: 20px;
+/* Classes */
+
+body.visualizar {
+    backdrop-filter: none;
+}
+
+body.visualizar .header-body {
+    transform: translateY(-120%);
+}
+
+body.visualizar .sidebar-direita {
+    transform: translateX(120%);
+}
+
+body.visualizar .sidebar-esquerda {
+    transform: translateX(-130%);
+}
+
+body.visualizar .view {
+    position: fixed;
+    left: 95.8%;
+    top: 3%;
+}
+
+
+.nav-btn.btn-deslizante::before {
+    right: 10px;
+}
+
+
+body.sidebar main {
+    grid-template-columns: auto 1fr 220px;
+}
+
+body.sidebar .sidebar-direita {
+    width: 220px;
+}
+
+body.sidebar .container-btn-sidebar-direita button,
+body.sidebar .add {
+    opacity: 1;
+}
+
+
+body.chat article,
+body.chat .add {
+    display: block;
+}
+
+body.chat .sidebar-esquerda {
+    display: none;
+}
+
+
+body.calendario .container-relogio {
+    transform: translateX(-110%);
+}
+
+body.calendario .container-calendario {
+    opacity: 1;
+    transform: translateX(-100%);
+}
+
+
+body.nota .container-relogio,
+body.nota .container-calendario {
+    transform: translateX(-210%);
+}
+
+body.nota .container-nota {
+    transform: translateX(-200%);
+    opacity: 1;
+}
+
+
+body.inputnota .input-area {
+    display: flex;
+}
+
+body.inputnota #input-mensagem,
+body.inputnota #input-numero,
+body.inputnota #input-nome,
+body.inputnota #lista-contatos {
+    display: none;
+}
+
+
+.container-notas.primeira {
+    border-radius: 20px 20px 0 0;
     position: relative;
-    outline: none;
-    box-shadow: 0 0 10px var(--glow-cyan);
+    .container-notas::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70%;
+        border-radius: 20px 20px 0 0;
+        background: var(--reflection);
+    }
+}
+
+.container-notas.ultima {
+    border-radius: 0 0 20px 20px;
+    position: relative;
+    .container-notas::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70%;
+        border-radius: 0 0 20px 20px;
+        background: var(--reflection);
+        transform: rotate(180deg);
+    }
+}
+
+/* Hovers */
+
+.container-notas:hover {
+    .container-inferior {
+        opacity: 1;
+    }
+}
+
+/* scroll */
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.15);
 }
