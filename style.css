@@ -180,11 +180,125 @@ header {
 article {
     grid-area: mensagens;
     display: none;
+    opacity: 0;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    height: 85vh;
+    width: 100%;
+    border-radius: 20px;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.6s ease;
+    z-index: 1;
+}
+
+.input {
+   background: var(--glass-bg);
+   border: 1px solid var(--glass-border);
+   width: 100%;
+   height: 45px;
+   line-height: 20px;
+   border-radius: 20px;
+   padding: 10px;
+   outline: none;
+   color: #eefcff;
+   text-shadow: 0 0 5px var(--green-main);
+}
+
+article::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    border-radius: 20px;
+    background: var(--reflection);
+}
+
+.header-main {
+    border-bottom: 1px solid var(--glass-border);
+    height: 60px;
+    background: var(--glass-bg);
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding: 10px;
+    text-shadow: 0 0 10px var(--deep-ocean);
+}
+
+.container-input {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+}
+
+.enviar {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 7px;
+}
+
+.enviar img {
+    height: 33px;
+}
+
+.mensagens {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.container-mensagem {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+@keyframes Animação {
+    from {
+        opacity: 0;
+        transform: translateX(110%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.balão {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    max-width: 250px;
+    width: fit-content;
+    border-radius: 20px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: end;
+    box-shadow: 0 6px 10px var(--deep-ocean);
+    text-shadow: 0 0 7px var(--deep-ocean);
+    animation: Animação 0.4s ease forwards;
+}
+
+.balão p {
+    width: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 main {
     transition: all 0.4s ease;
     grid-area: main;
+    gap: 10px;
     display: grid;
     grid-template-columns: auto 1fr 50px;
     grid-template-areas:
@@ -198,6 +312,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    opacity: 1;
     transition: all 0.4s ease;
 }
 
@@ -220,6 +335,8 @@ main {
     padding: 5px 10px;
     position: relative;
     max-width: 250px;
+    min-width: 250px;
+    width: 250px;
 }
 
 .header-widget::before {
@@ -250,7 +367,7 @@ main {
     align-items: center;
     position: relative;
     transition: all 0.4s ease;
-    transform: translateX(0);
+    transform: translate(0, 0);
 }
 
 .container-relogio::before {
@@ -282,7 +399,7 @@ main {
     position: relative;
     opacity: 0;
     transition: all 0.4s ease;
-    transform: translateX(0);
+    transform: translate(0, 0);
 }
 
 .container-calendario::before {
@@ -313,7 +430,7 @@ main {
     position: relative;
     opacity: 0;
     transition: all 0.4s ease;
-    transform: translateX(-100%);
+    transform: translate(-100%, 0);
     overflow-y: auto;
 }
 
@@ -407,6 +524,7 @@ main {
     width: 100%;
     justify-content: space-between;
     opacity: 0;
+    transition: 0.3s ease;
 }
 
 .container-btns {
@@ -474,9 +592,29 @@ main {
     backdrop-filter: blur(10px);
     border-radius: 20px;
     position: relative;
-    z-index: 2;
+    z-index: 999;
     transition: all 0.4s ease;
     width: 50px;
+    display: flex;
+    flex-direction: column;
+    height: 85vh;
+    gap: 10px;
+}
+
+.chat-contatos {
+    display: none;
+}
+
+.sidebar-direita::before {
+    content: "";
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: var(--reflection);
+    border-radius: 20px;
+    pointer-events: none;
 }
 
 .header-menu {
@@ -487,18 +625,6 @@ main {
     border-radius: 20px 20px 0 0;
     height: 60px;
     position: relative;
-}
-
-.header-menu::before {
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background: var(--reflection);
-    top: 0;
-    left: 0;
-    border-radius: 20px 20px 0 0;
-    pointer-events: none;
 }
 
 .add {
@@ -527,6 +653,7 @@ main {
     box-shadow: 0 0 10px var(--glow-blue);
     opacity: 0;
     transition: all 0.4s ease;
+    text-shadow: 0 0 10px var(--deep-ocean);
 }
 
 .container-btn-sidebar-direita button::before {
@@ -544,6 +671,7 @@ main {
 
 .add img {
     height: 40px;
+    filter: drop-shadow(var(--deep-ocean));
 }
 
 .open-sidebar img {
@@ -558,7 +686,6 @@ main {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    transform: translateY(30px);
 }
 
 .lista-contatos {
@@ -580,7 +707,8 @@ main {
     pointer-events: none;
 }
 
-.input-area textarea {
+.input-area textarea,
+.input-area input {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     padding: 12px;
@@ -588,6 +716,47 @@ main {
     position: relative;
     outline: none;
     box-shadow: 0 0 10px var(--glow-cyan);
+    color: var(--deep-blue);
+}
+
+input::placeholder {
+    color: var(--deep-blue);
+}
+
+textarea::placeholder {
+    color: var(--light-soft);
+}
+
+.chat-contatos {
+    display: none;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    padding: 0 10px;
+    gap: 10px;
+}
+
+.contato {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 5px;
+    text-shadow: 0 0 10px var(--deep-ocean);
+    width: 100%;
+    font-size: 20px;
+    box-shadow: 0 6px 8px var(--shadow-strong);
+    gap: 5px;
+    display: none;
+    cursor: pointer;
+}
+
+.contato img {
+    height: 35px;
 }
 
 /* geral */
@@ -601,10 +770,6 @@ button {
     justify-content: center;
     align-items: center;
     outline: none;
-}
-
-textarea::placeholder {
-    color: #eefcff;
 }
 
 /* Classes */
@@ -631,6 +796,10 @@ body.visualizar .view {
     top: 3%;
 }
 
+body.visualizar article {
+    transform: translateY(130%);
+}
+
 
 .nav-btn.btn-deslizante::before {
     right: 10px;
@@ -650,39 +819,88 @@ body.sidebar .add {
     opacity: 1;
 }
 
-
-body.chat article,
-body.chat .add {
-    display: block;
+body.sidebar .contato {
+    display: flex;
 }
 
-body.chat .sidebar-esquerda {
+
+body.chat .add {
+    display: block; 
+}
+
+body.chat .container-musica {
+    opacity: 0;
+}
+
+body.chat .widget-visualizações {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+body.chat .container-btn-sidebar-direita {
     display: none;
+}
+
+body.chat article {
+    display: flex;
+    opacity: 1;
+}
+
+body.chat .container-nota {
+    transform: translate(0, -100%);
+}
+
+body.chat .chat-contatos {
+    display: flex;
 }
 
 
 body.calendario .container-relogio {
-    transform: translateX(-110%);
+    transform: translate(-110%, 0);
 }
 
 body.calendario .container-calendario {
     opacity: 1;
-    transform: translateX(-100%);
+    transform: translate(-100%, 0);
+}
+
+
+body.calendarioChat .container-relogio {
+    transform: translate(0, -110%);
+    opacity: 1;
+}
+
+body.calendarioChat .container-calendario {
+    transform: translate(0, -100%);
+    opacity: 1;
+}
+
+body.notaChat .container-relogio,
+body.notaChat .container-calendario {
+    transform: translate(0, -210%);
+    opacity: 1;
+}
+
+body.notaChat .container-nota {
+    transform: translate(0, -200%);
+    opacity: 1;
 }
 
 
 body.nota .container-relogio,
 body.nota .container-calendario {
-    transform: translateX(-210%);
+    transform: translate(-210%, 0);
 }
 
 body.nota .container-nota {
-    transform: translateX(-200%);
+    transform: translate(-200%, 0);
     opacity: 1;
 }
 
 
-body.inputnota .input-area {
+body.inputnota .input-area,
+body.inputcontato .input-area {
     display: flex;
 }
 
@@ -690,6 +908,13 @@ body.inputnota #input-mensagem,
 body.inputnota #input-numero,
 body.inputnota #input-nome,
 body.inputnota #lista-contatos {
+    display: none;
+}
+
+
+body.inputcontato #input-nota,
+body.inputcontato #input-mensagem,
+body.inputcontato #lista-contatos {
     display: none;
 }
 

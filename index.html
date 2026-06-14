@@ -53,13 +53,15 @@
             </div>
         </aside>
         <article>
-            <header id="header-main">
+            <header id="header-main" class="header-main">
                 <h3 id="nome-contato"></h3>
             </header>
             <div class="mensagens" id="mensagens">
                 <div class="container-mensagem" id="container-mensagem"></div>
             </div>
-            <textarea class="input" id="input" placeholder="Mensagem"></textarea>
+            <div class="container-input">
+            <textarea class="input" id="input" placeholder="Mensagem..."></textarea> <button class="enviar" id="enviar"><img src="Windows 7 Icons/012.png"></button>
+            </div>
         </article>
         <aside class="sidebar-direita">
             <header class="header-menu">
@@ -72,12 +74,13 @@
                 <button class="mensagem-rapida" id="mensagem-rapida">Mensagem Rápida</button>
             </div>
             <div class="input-area" id="input-area">
-                <div class="lista-contatos" id="lista-contatos"></div>
                 <textarea id="input-nota" placeholder="Digite sua Nota"></textarea>
                 <textarea id="input-mensagem" placeholder="Digite sua mensagem"></textarea>
                 <input type="number" id="input-numero" placeholder="Número">
                 <input type="text" id="input-nome" placeholder="nome">
+                <div class="lista-contatos" id="lista-contatos"></div>
             </div>
+            <div class="chat-contatos" id="chat-contatos"></div>
         </aside>
     </main>
     <script src="script.js"></script>

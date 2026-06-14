@@ -18,6 +18,16 @@ const InputNota = document.getElementById("input-nota");
 const BtnNovaNota = document.getElementById("nova-nota");
 const BtnPause = document.getElementById("pause");
 const SemNotas = document.getElementById("sem-notas");
+const InputMensagem = document.getElementById("input-mensagem");
+const InputNumero = document.getElementById("input-numero");
+const InputNome = document.getElementById("input-nome");
+const ListaContatos = document.getElementById("lista-contatos");
+const add = document.getElementById("add");
+const ChatContatos = document.getElementById("chat-contatos")
+const NomeContato = document.getElementById("nome-contato");
+const ContainerMensagem = document.getElementById("container-mensagem");
+const InputMensagemChat = document.getElementById("input");
+const enviar = document.getElementById("enviar");
 
 // funções
 
@@ -140,6 +150,70 @@ function BordaNotas() {
     }
 }
 
+function Mensagem() {
+    const MensagemTexto = InputMensagemChat.value.trim()
+
+    const Balão = document.createElement("div")
+    const MensagemParaCrush = document.createElement("p")
+
+    if (MensagemTexto === "") {
+        return
+    }
+
+    MensagemParaCrush.textContent = MensagemTexto
+
+    ContainerMensagem.appendChild(Balão)
+    Balão.appendChild(MensagemParaCrush)
+
+    Balão.classList.add("balão")
+}
+
+function CriarContato() {
+    let nome = InputNome.value.trim()
+    const numero = InputNumero.value.trim()
+
+    const contato = document.createElement("div")
+    const titulo = document.createElement("h4")
+    const foto = document.createElement("img")
+
+    if (nome === "") {
+        nome = numero
+    }
+
+    if (numero === "") {
+        body.classList.remove("inputcontato")
+        return
+    }
+
+    titulo.dataset.NomeCompleto = nome
+    titulo.dataset.NumeroCompleto = numero
+
+    if (numero.length > 12) {
+        titulo.textContent = numero.slice(0, 12) + "..."
+    }
+    else if (nome.length > 12) {
+        titulo.textContent = nome.slice(0, 12) + "..."
+    }
+    else {
+        titulo.textContent = nome
+    }
+
+    foto.src = "Imagens/Icon1.webp"
+
+    ChatContatos.appendChild(contato)
+    contato.appendChild(titulo)
+    contato.append(foto);
+
+    contato.classList.add("contato")
+    contato.addEventListener("click", () => {
+        NomeContato.textContent = nome;
+    });
+
+    InputNome.value = ""
+    InputNumero.value = ""
+    body.classList.remove("inputcontato")
+}
+
 // Código
 
 BtnView.addEventListener("click", () => {
@@ -148,7 +222,7 @@ BtnView.addEventListener("click", () => {
         body.appendChild(BtnView)
     }
     else {
-        HeaderBody.appendChild(BtnView)
+        setTimeout (HeaderBody.appendChild(BtnView), 5000)
     }
 });
 
@@ -162,10 +236,12 @@ OpenSidebar.addEventListener("click", () => {
         if (ButtonHeader === BtnMensagem) {
             NavBtn.classList.add("btn-deslizante")
             body.classList.add("chat")
+            body.classList.remove("calendario", "nota", "inputnota")
+            InputMensagemChat.focus()
         }
         else if (ButtonHeader === BtnMenu) {
             NavBtn.classList.remove("btn-deslizante")
-            body.classList.remove("chat")
+            body.classList.remove("chat", "calendarioChat", "notaChat", "inputcontato")
         }
         else {
             NavBtn.classList.remove("btn-deslizante")
@@ -177,18 +253,35 @@ OpenSidebar.addEventListener("click", () => {
 [BtnCalendario, BtnRelogio, BtnNota].forEach((ButtonWidget) => {
     ButtonWidget.addEventListener("click", () => {
         if (ButtonWidget === BtnCalendario) {
-            body.classList.add("calendario")
-            body.classList.remove("nota")
+            if (body.classList.contains("chat")) {
+                body.classList.add("calendarioChat")
+                body.classList.remove("notaChat")
+            }
+            else {
+                body.classList.add("calendario")
+                body.classList.remove("nota")
+            }
         }
         else if (ButtonWidget === BtnRelogio) {
-            body.classList.remove("calendario", "nota")
+            if (body.classList.contains("chat")) {
+                body.classList.remove("calendarioChat", "notaChat")
+            }
+            else {
+                 body.classList.remove("calendario", "nota")
+            }
         }
         else if (ButtonWidget === BtnNota) {
-            body.classList.add("nota")
-            body.classList.remove("calendario")
+            if (body.classList.contains("chat")) {
+                body.classList.add("notaChat")
+                body.classList.remove("calendarioChat")
+            }
+            else {
+                body.classList.add("nota")
+                body.classList.remove("calendario")
+            }
         }
         else {
-            body.classList.remove("calendario", "nota")
+            body.classList.remove("calendario", "nota", "calendarioChat", "notaChat")
         }
     })
 });
@@ -205,10 +298,36 @@ InputNota.addEventListener("keydown", (e) => {
     }
 });
 
-BtnPause.addEventListener("click", () => {
-    const foto = document.createElement("img")
-    foto.src = "477.png"
+add.addEventListener("click", () => {
+    body.classList.add("inputcontato")
+    InputNumero.focus();
 });
+
+[InputNome, InputNumero].forEach((InputsContato) => {
+    InputsContato.addEventListener("keydown", (e) => {
+        if(e.key === "Enter") {
+            CriarContato();
+        }
+    })
+});
+
+[InputMensagemChat, enviar].forEach((EnviarMensagem) => {
+    if (EnviarMensagem === InputMensagemChat) {
+    InputMensagemChat.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+        Mensagem();
+        InputMensagemChat.value = ""
+    }
+    })
+    }
+    else if (EnviarMensagem === enviar) {
+        enviar.addEventListener("click", () => {
+            Mensagem();
+                InputMensagemChat.value = ""
+            InputMensagemChat.focus()
+        })
+    }
+})
 
 // data
 
@@ -217,3 +336,5 @@ setInterval(HorarioAtual, 1000);
 
 DataAtual();
 setInterval(DataAtual, 1000);
+
+// classes 
