@@ -28,6 +28,13 @@ const NomeContato = document.getElementById("nome-contato");
 const ContainerMensagem = document.getElementById("container-mensagem");
 const InputMensagemChat = document.getElementById("input");
 const enviar = document.getElementById("enviar");
+const InputFoto = document.getElementById("input-foto");
+const BtnConfirmar = document.getElementById("btn-confirmar");
+const BtnMesagemRapida = document.getElementById("mensagem-rapida");
+const InputPesquisar = document.getElementById("input-pesquisar");
+
+let ContatoAtual = null;
+const contatos = []
 
 // funções
 
@@ -41,7 +48,7 @@ function HorarioAtual() {
 
 function DataAtual() {
     const hoje = new Date();
-    const dia = String(hoje.getDay()).padStart(2, "0");
+    const dia = String(hoje.getDate()).padStart(2, "0");
     const mes = String(hoje.getMonth()+1).padStart(2, "0");
     const ano = String(hoje.getFullYear()).padStart(2, "0");
     data.textContent = `${dia}/${mes}/${ano}`;
@@ -150,31 +157,62 @@ function BordaNotas() {
     }
 }
 
+function CriarBalao(texto) {
+    const Balao = document.createElement("div");
+    const p = document.createElement("p");
+
+    p.textContent = texto;
+
+    Balao.classList.add("balao");
+
+    Balao.appendChild(p);
+    ContainerMensagem.appendChild(Balao);
+}
+
 function Mensagem() {
-    const MensagemTexto = InputMensagemChat.value.trim()
+    const MensagemTexto = InputMensagemChat.value.trim();
+    const MensagemRapida = InputMensagem.value.trim();
 
-    const Balão = document.createElement("div")
-    const MensagemParaCrush = document.createElement("p")
+    const texto = MensagemTexto || MensagemRapida;
 
-    if (MensagemTexto === "") {
-        return
+    console.log(ContatoAtual)
+
+    if (texto === "") return;
+    if (!ContatoAtual) {
+        alert("Não é possivel enviar mensagem sem contato. Clique em um dos contatos criados ou crie um")
+        return;
     }
 
-    MensagemParaCrush.textContent = MensagemTexto
+    ContatoAtual.mensagens.push(texto);
 
-    ContainerMensagem.appendChild(Balão)
-    Balão.appendChild(MensagemParaCrush)
+    CriarBalao(texto);
+}
 
-    Balão.classList.add("balão")
+function RenderizarMensagens() {
+    ContainerMensagem.innerHTML = "";
+    ContatoAtual.mensagens.forEach(texto => {
+
+    const Balao = document.createElement("div");
+    const p = document.createElement("p");
+
+    p.textContent = texto;
+
+    Balao.classList.add("balao");
+
+    Balao.appendChild(p);
+
+    ContainerMensagem.appendChild(Balao);
+    });
 }
 
 function CriarContato() {
     let nome = InputNome.value.trim()
     const numero = InputNumero.value.trim()
+    let foto = InputFoto.value
 
     const contato = document.createElement("div")
     const titulo = document.createElement("h4")
-    const foto = document.createElement("img")
+    const FotoPerfil = document.createElement("img")
 
     if (nome === "") {
         nome = numero
@@ -185,10 +223,14 @@ function CriarContato() {
         return
     }
 
+    if (foto === "") {
+        FotoPerfil.src = "Imagens/Icon1.webp"
+    }
+
     titulo.dataset.NomeCompleto = nome
     titulo.dataset.NumeroCompleto = numero
 
-    if (numero.length > 12) {
+    if (numero.length > 13) {
         titulo.textContent = numero.slice(0, 12) + "..."
     }
     else if (nome.length > 12) {
@@ -198,16 +240,25 @@ function CriarContato() {
         titulo.textContent = nome
     }
 
-    foto.src = "Imagens/Icon1.webp"
-
     ChatContatos.appendChild(contato)
     contato.appendChild(titulo)
-    contato.append(foto);
+    contato.append(FotoPerfil);
 
     contato.classList.add("contato")
+
+    const NovoContato = {
+        nome: nome,
+        numero: numero,
+        mensagens: []
+    }
+
     contato.addEventListener("click", () => {
-        NomeContato.textContent = nome;
-    });
+        ContatoAtual = NovoContato
+        NomeContato.textContent = NovoContato.nome;
+        RenderizarMensagens()
+    }); 
+
+    contatos.push(NovoContato)
 
     InputNome.value = ""
     InputNumero.value = ""
@@ -222,13 +273,35 @@ BtnView.addEventListener("click", () => {
         body.appendChild(BtnView)
     }
     else {
-        setTimeout (HeaderBody.appendChild(BtnView), 5000)
+        setTimeout(() => {
+            HeaderBody.appendChild(BtnView)
+        }, 400)
     }
 });
 
+BtnConfirmar.addEventListener("click", () => {
+    if (body.classList.contains("inputnota")) {
+        NovaNota();
+    }
+    else if (body.classList.contains("inputcontato")) {
+        CriarContato();
+    }
+    else if (body.classList.contains("inputmensagemrapida")) {
+        Mensagem();
+    }
+    else {
+        return;
+    }
+})
 
 OpenSidebar.addEventListener("click", () => {
     body.classList.toggle("sidebar");
+    if (body.classList.contains("sidebar")) {
+        return
+    }
+    else {
+        body.classList.remove("inputnota", "inputcontato", "inputmensagemrapida")
+    }
 });
 
 [BtnMensagem, BtnMenu].forEach((ButtonHeader) => {
@@ -236,7 +309,7 @@ OpenSidebar.addEventListener("click", () => {
         if (ButtonHeader === BtnMensagem) {
             NavBtn.classList.add("btn-deslizante")
             body.classList.add("chat")
-            body.classList.remove("calendario", "nota", "inputnota")
+            body.classList.remove("calendario", "nota", "inputnota", "inputnota", "inputmensagemrapida")
             InputMensagemChat.focus()
         }
         else if (ButtonHeader === BtnMenu) {
@@ -291,12 +364,6 @@ BtnNovaNota.addEventListener("click", () => {
     InputNota.focus();
 });
 
-InputNota.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        NovaNota();
-    }
-});
 
 add.addEventListener("click", () => {
     body.classList.add("inputcontato")
@@ -311,25 +378,79 @@ add.addEventListener("click", () => {
     })
 });
 
-[InputMensagemChat, enviar].forEach((EnviarMensagem) => {
-    if (EnviarMensagem === InputMensagemChat) {
+[InputMensagemChat, enviar, InputNota].forEach((TextareaEnviar) => {
+    if (TextareaEnviar === InputMensagemChat) {
     InputMensagemChat.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+    if (e.key === "Enter" && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
         Mensagem();
         InputMensagemChat.value = ""
     }
     })
     }
-    else if (EnviarMensagem === enviar) {
+    else if (TextareaEnviar === enviar) {
         enviar.addEventListener("click", () => {
             Mensagem();
-                InputMensagemChat.value = ""
+            InputMensagemChat.value = ""
             InputMensagemChat.focus()
         })
     }
+    else if (TextareaEnviar === InputNota) {
+        InputNota.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                e.preventDefault();
+                NovaNota();
+                body.classList.add("nota")
+            }
+        })
+    }
+});
+
+BtnMesagemRapida.addEventListener("click", () => {
+    body.classList.add("inputmensagemrapida")
+    ListaContatos.innerHTML = ""
+    contatos.forEach(contato => {
+        const item = document.createElement("div");
+        item.classList.add("item")
+        item.textContent = contato.nome;
+        item.addEventListener("click", () => {
+            ContatoAtual = contato;
+            body.classList.add("SelecionarContato")
+        });
+        ListaContatos.appendChild(item)
+    })
+    InputMensagem.focus();
+    ListaContatos.appendChild(contatos)
+});
+
+InputMensagem.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        Mensagem();
+        InputMensagem.value = ""
+    }
+    else if (e.key === "Escape") {
+        body.classList.remove("inputmensagemrapida")
+    }
 })
 
-// data
+InputPesquisar.addEventListener("input", (e) => {
+    const termo = e.target.value.toLowerCase();
+    document.querySelectorAll(".contato").forEach(contato => {
+        const nome = contato.querySelector("h4").textContent.toLowerCase();
+        contato.style.display = nome.includes(termo)
+            ? "flex"
+            : "none";
+    });
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        ContatoAtual = null
+        NomeContato.textContent = ""
+        ContainerMensagem.innerHTML = ""
+    }
+})
+
+// função
 
 HorarioAtual();
 setInterval(HorarioAtual, 1000);
@@ -337,4 +458,4 @@ setInterval(HorarioAtual, 1000);
 DataAtual();
 setInterval(DataAtual, 1000);
 
-// classes 
+BordaNotas();

@@ -161,10 +161,16 @@ header {
 
 .logo {
     display: flex;
+    gap: 10px;
 }
 
 .logo img {
     height: 70px;
+}
+
+.logo h1 {
+    color: #eefcff;
+    text-shadow: 0 0 5px #53c7ff, 0 0 10px #53c7ff;
 }
 
 .view img {
@@ -173,13 +179,16 @@ header {
 
 .view {
     transition: all 0.4s ease;
+    opacity: 1;
+    pointer-events: auto;
+    scale: 1;
 }
 
 /* Mensagens */
 
 article {
     grid-area: mensagens;
-    display: none;
+    display: flex;
     opacity: 0;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -190,7 +199,10 @@ article {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    transition: transform 0.6s ease;
+    pointer-events: none;
+    transform: translateY(50px);
+    scale: 0.95;
+    transition: all 0.4s ease;
     z-index: 1;
 }
 
@@ -205,6 +217,10 @@ article {
    outline: none;
    color: #eefcff;
    text-shadow: 0 0 5px var(--green-main);
+}
+
+.input::placeholder {
+    color: #eefcff;
 }
 
 article::before {
@@ -275,7 +291,7 @@ article::before {
     }
 }
 
-.balão {
+.balao {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     max-width: 250px;
@@ -289,7 +305,7 @@ article::before {
     animation: Animação 0.4s ease forwards;
 }
 
-.balão p {
+.balao p {
     width: 100%;
     white-space: pre-wrap;
     overflow-wrap: break-word;
@@ -457,6 +473,8 @@ main {
     border: 1px solid var(--glass-border);
     border-radius: 20px;
     position: relative;
+    opacity: 1;
+    transition: all 0.4s ease;
 }
 
 .container-musica::before {
@@ -627,6 +645,16 @@ main {
     position: relative;
 }
 
+.input-area-pesquisar {
+    opacity: 0;
+    display: none;
+    justify-content: center;
+    transition: all 0.4s ease;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
 .add {
     opacity: 0;
     transition: all 0.4s ease;
@@ -639,6 +667,11 @@ main {
     align-items: center;
     justify-content: center;
     gap: 15px;
+    opacity: 1;
+    transition: all 0.4s ease;
+    scale: 1;
+    pointer-events: auto;
+    margin-bottom: 20px;
 }
 
 .container-btn-sidebar-direita button {
@@ -650,10 +683,9 @@ main {
     height: 5vh;
     backdrop-filter: blur(10px);
     position: relative;
-    box-shadow: 0 0 10px var(--glow-blue);
     opacity: 0;
     transition: all 0.4s ease;
-    text-shadow: 0 0 10px var(--deep-ocean);
+    text-shadow: 0 0 5px var(--deep-ocean);
 }
 
 .container-btn-sidebar-direita button::before {
@@ -680,12 +712,37 @@ main {
     filter: drop-shadow(0 0 4px rgba(0, 0, 0, 5));
 }
 
+.btn-confirmar {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 12px;
+    width: 100%;
+    border-radius: 20px;
+    position: relative;
+}
+
+.btn-confirmar::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 20px;
+    background: var(--reflection);
+    pointer-events: none;
+}
+
 .input-area {
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    opacity: 0;
+    padding: 0 10px;
+    pointer-events: none;
+    transition: 0.3s ease;
 }
 
 .lista-contatos {
@@ -698,6 +755,13 @@ main {
     position: relative;
 }
 
+.lista-contatos div {
+    background: var(--glass-bg);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 12px;
+    width: 100%;
+}
+
 .lista-contatos::before {
     content: "";
     position: absolute;
@@ -707,24 +771,9 @@ main {
     pointer-events: none;
 }
 
-.input-area textarea,
-.input-area input {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    padding: 12px;
-    border-radius: 20px;
-    position: relative;
-    outline: none;
-    box-shadow: 0 0 10px var(--glow-cyan);
-    color: var(--deep-blue);
-}
-
-input::placeholder {
-    color: var(--deep-blue);
-}
-
-textarea::placeholder {
-    color: var(--light-soft);
+input::placeholder,
+#input-nota::placeholder {
+    color: var(--deep-ocean);
 }
 
 .chat-contatos {
@@ -751,8 +800,10 @@ textarea::placeholder {
     font-size: 20px;
     box-shadow: 0 6px 8px var(--shadow-strong);
     gap: 5px;
-    display: none;
+    display: flex;
     cursor: pointer;
+    opacity: 0;
+    transition: all 0.4s ease;
 }
 
 .contato img {
@@ -770,6 +821,72 @@ button {
     justify-content: center;
     align-items: center;
     outline: none;
+    transition: all 0.4s ease;
+}
+
+textarea,
+input {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 12px;
+    border-radius: 20px;
+    position: relative;
+    outline: none;
+    resize: none;
+    width: 100%;
+    transition: all 0.4s ease;
+}
+
+/* Inputs */
+
+input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+}
+
+label {
+    cursor: pointer;
+    padding: 10px 20px;
+    background: var(--glass-bg);
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 0 10px var(--shadow-soft);
+    width: 100%;
+}
+
+/* hover */
+
+input:hover,
+#input-nota:hover,
+.btn-confirmar:hover,
+label:hover,
+.container-btn-sidebar-direita button:hover {
+    box-shadow: 0 0 10px var(--aqua-dark), 0 0 5px #eefcff;
+}
+
+.header-body button:hover {
+    text-shadow: 0 0 10px #eefcff;
+    font-size: 19px;
+}
+
+.widget-visualizações div:hover {
+    box-shadow: 0 0 10px var(--aqua-dark);
+}
+
+.input:hover,
+.enviar:hover {
+    box-shadow: 0 0 15px var(--aqua-dark);
+}
+
+.container-notas:hover {
+    .container-inferior {
+        opacity: 1;
+    }
+
+    .container-inferior,
+    .container-btnmais,
+    .container-btns {
+        box-shadow: none;
+    }
 }
 
 /* Classes */
@@ -796,10 +913,6 @@ body.visualizar .view {
     top: 3%;
 }
 
-body.visualizar article {
-    transform: translateY(130%);
-}
-
 
 .nav-btn.btn-deslizante::before {
     right: 10px;
@@ -815,17 +928,28 @@ body.sidebar .sidebar-direita {
 }
 
 body.sidebar .container-btn-sidebar-direita button,
-body.sidebar .add {
+body.sidebar .add,
+body.sidebar .input-area-pesquisar {
     opacity: 1;
 }
 
 body.sidebar .contato {
-    display: flex;
+    opacity: 1;
 }
 
 
 body.chat .add {
     display: block; 
+}
+
+body.chat .input-area-pesquisar {
+    display: flex;
+}
+
+body.chat .view {
+    opacity: 0;
+    pointer-events: none;
+    scale: 0.80;
 }
 
 body.chat .container-musica {
@@ -839,20 +963,26 @@ body.chat .widget-visualizações {
 }
 
 body.chat .container-btn-sidebar-direita {
+    opacity: 0;
+    scale: 0.90;
+    pointer-events: none;
     display: none;
 }
 
 body.chat article {
-    display: flex;
     opacity: 1;
+    transform: translateY(0);
+    scale: 1;
+    pointer-events: auto;
 }
-
+ 
 body.chat .container-nota {
     transform: translate(0, -100%);
 }
 
 body.chat .chat-contatos {
     display: flex;
+    overflow-y: scroll;
 }
 
 
@@ -900,22 +1030,40 @@ body.nota .container-nota {
 
 
 body.inputnota .input-area,
-body.inputcontato .input-area {
+body.inputcontato .input-area,
+body.inputmensagemrapida .input-area {
+    opacity: 1;
+    pointer-events: auto;
     display: flex;
 }
 
 body.inputnota #input-mensagem,
 body.inputnota #input-numero,
 body.inputnota #input-nome,
-body.inputnota #lista-contatos {
+body.inputnota #lista-contatos,
+body.inputnota #input-foto,
+body.inputnota label {
     display: none;
 }
 
 
 body.inputcontato #input-nota,
 body.inputcontato #input-mensagem,
-body.inputcontato #lista-contatos {
+body.inputcontato #lista-contatos,
+body.inputcontato #input-foto {
     display: none;
+}
+
+body.inputmensagemrapida #input-nota,
+body.inputmensagemrapida #input-foto,
+body.inputmensagemrapida #input-nome,
+body.inputmensagemrapida #input-numero,
+body.inputmensagemrapida label {
+    display: none;
+}
+
+body.SelecionarContato .item {
+    box-shadow: 0 0 10px var(--light-white);
 }
 
 
@@ -950,14 +1098,6 @@ body.inputcontato #lista-contatos {
     }
 }
 
-/* Hovers */
-
-.container-notas:hover {
-    .container-inferior {
-        opacity: 1;
-    }
-}
-
 /* scroll */
 
 ::-webkit-scrollbar {
@@ -976,4 +1116,9 @@ body.inputcontato #lista-contatos {
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-direita::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
 }
