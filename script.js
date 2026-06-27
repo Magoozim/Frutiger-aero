@@ -33,6 +33,13 @@ const BtnConfirmar = document.getElementById("btn-confirmar");
 const BtnMesagemRapida = document.getElementById("mensagem-rapida");
 const InputPesquisar = document.getElementById("input-pesquisar");
 
+const Windows7 = document.getElementById("windows-7");
+const enchendo = document.getElementById("enchendo");
+const agua = document.getElementById("agua");
+const bolhas = document.getElementById("bolhas");
+const golfinho = document.getElementById("golfinho");
+const WindowsXP = document.getElementById("windows-XP");
+
 let ContatoAtual = null;
 const contatos = []
 
@@ -49,9 +56,130 @@ function HorarioAtual() {
 function DataAtual() {
     const hoje = new Date();
     const dia = String(hoje.getDate()).padStart(2, "0");
-    const mes = String(hoje.getMonth()+1).padStart(2, "0");
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
     const ano = String(hoje.getFullYear()).padStart(2, "0");
     data.textContent = `${dia}/${mes}/${ano}`;
+}
+
+function EasterEggsNotas(valor, nota, link, ContainerNota) {
+    if (valor === "magoozim") {
+        nota.style.display = "none"
+        link.style.display = "block"
+    }
+
+    if (valor === "whats evil aero?") {
+        ContainerNota.remove();
+        body.style.display = "none"
+        setTimeout(() => {
+            body.classList.add("EasterEgg-Evilaero");
+            body.style.display = "block"
+        }, 2000)
+    }
+
+    if (valor === "restore aero") {
+        body.classList.remove("EasterEgg-Evilaero", "EasterEgg-aero", "EasterEgg-null", "EasterEgg-frutiger", "EasterEgg-WindowsXP", "EasterEgg-WindowsVista");
+    }
+
+    if (valor === "windows7") {
+        Windows7.play();
+        setTimeout(() => {
+            Windows7.pause();
+        }, 6000);
+    }
+
+    if (valor === "windowsXP") {
+        WindowsXP.play();
+        WindowsXP.volume = 0.6
+        setTimeout(() => {
+            WindowsXP.pause();
+        }, 5000)
+    }
+
+    if (valor === "aero") {
+        body.classList.add("EasterEgg-aero")
+    }
+
+    if (valor === "dolphin") {
+        body.classList.add("EasterEgg-AquaBody", "EasterEgg-agua")
+        FadeIn(enchendo)
+        setTimeout(() => {
+            FadeIn(agua)
+            FadeIn(bolhas)
+            FadeOut(enchendo)
+        }, 1000)
+        setTimeout(() => {
+            body.classList.toggle("EasterEgg-golfinho")
+            FadeIn(golfinho)
+        }, 2000)
+        setTimeout(() => {
+            FadeOut(agua)
+            FadeOut(bolhas)
+            body.classList.remove("EasterEgg-AquaBody", "EasterEgg-agua")
+        }, 6000)
+
+        function FadeOut(audio, velocidade = 0.02) {
+            const fade = setInterval(() => {
+                if (audio.volume > velocidade) {
+                    audio.volume -= velocidade;
+                } else {
+                    audio.volume = 0;
+                    audio.pause();
+                    audio.currentTime = 0;
+                    clearInterval(fade);
+                }
+            }, 50);
+        }
+
+        function FadeIn(audio, volumeFinal = 0.3, velocidade = 0.02) {
+            audio.currentTime = 0;
+            audio.volume = 0;
+            audio.play();
+
+            const fade = setInterval(() => {
+                if (audio.volume < volumeFinal) {
+                    audio.volume += velocidade;
+                } else {
+                    audio.volume = volumeFinal;
+                    clearInterval(fade);
+                }
+            }, 50);
+        }
+    }
+
+    if (valor === "root") {
+        nota.textContent = "Você não deveria estar aqui"
+    }
+
+    if (valor === "null") {
+        body.classList.add("EasterEgg-null")
+    }
+
+    if (valor === "404") {
+        document.querySelectorAll("p, span, button, h1, h2, h4, label").forEach((textos) => {
+            textos.dataset.TextosOriginais
+            textos.textContent = "ERROR"
+
+            if (valor === "restore aero") {
+                textos.textContent = textos.dataset.TextosOriginais
+            }
+        })
+    }
+
+    if (valor === "frutiger") {
+        body.classList.add("EasterEgg-frutiger")
+    }
+
+    if (valor === "WindowsXP Wallpaper") {
+        body.classList.add("EasterEgg-WindowsXP")
+    }
+
+    if (valor === "WindowsVista Wallpaper") {
+        body.classList.add("EasterEgg-WindowsVista")
+    }
+
+    if (ContainerNotas.querySelectorAll(".container-notas").length === 7) {
+        nota.textContent = valor + "Você gosta de criar notas né?"
+    }
 }
 
 function NovaNota() {
@@ -62,6 +190,7 @@ function NovaNota() {
     const nota = document.createElement("p")
     const ContainerNota = document.createElement("div")
     const texto = document.createElement("span")
+    const link = document.createElement("a")
     const ContainerInferior = document.createElement("div")
     const ContainerBtns = document.createElement("div")
     const ContainerBtnMais = document.createElement("div")
@@ -74,9 +203,12 @@ function NovaNota() {
     BtnMais.textContent = "Mais ⬇︎"
     nota.textContent = valor
     nota.dataset.TextoCompleto = valor
+    link.href = "https://youtube.com/@Magoozim_games"
+    link.textContent = valor
 
     ContainerNotas.appendChild(ContainerNota)
     ContainerNota.appendChild(nota)
+    ContainerNota.appendChild(link)
     ContainerNota.appendChild(ContainerInferior)
     ContainerInferior.appendChild(ContainerBtns)
     ContainerInferior.appendChild(ContainerBtnMais)
@@ -91,6 +223,8 @@ function NovaNota() {
     BtnEditar.classList.add("btn-editar")
     BtnExcluir.classList.add("btn-excluir")
     BtnMais.classList.add("btn-mais")
+
+    link.style.display = "none"
 
     if (valor === "") {
         body.classList.remove("inputnota")
@@ -129,18 +263,20 @@ function NovaNota() {
     }
 
     [BtnExcluir, BtnEditar].forEach((BtnNotas) => {
-    BtnNotas.addEventListener("click", () => {
-        if (BtnNotas === BtnExcluir) {
-            ContainerNota.remove();
-        }
-        else if (BtnNotas === BtnEditar) {
-            ContainerNota.remove();
-            body.classList.add("sidebar", "inputnota");
-            InputNota.value = nota.dataset.TextoCompleto;
-            InputNota.focus();
-        }
+        BtnNotas.addEventListener("click", () => {
+            if (BtnNotas === BtnExcluir) {
+                ContainerNota.remove();
+            }
+            else if (BtnNotas === BtnEditar) {
+                ContainerNota.remove();
+                body.classList.add("sidebar", "inputnota");
+                InputNota.value = nota.dataset.TextoCompleto;
+                InputNota.focus();
+            }
+        })
     })
-})
+
+    EasterEggsNotas(valor, nota, link, ContainerNota)
 
     InputNota.value = ""
     body.classList.remove("inputnota")
@@ -192,16 +328,16 @@ function RenderizarMensagens() {
     ContainerMensagem.innerHTML = "";
     ContatoAtual.mensagens.forEach(texto => {
 
-    const Balao = document.createElement("div");
-    const p = document.createElement("p");
+        const Balao = document.createElement("div");
+        const p = document.createElement("p");
 
-    p.textContent = texto;
+        p.textContent = texto;
 
-    Balao.classList.add("balao");
+        Balao.classList.add("balao");
 
-    Balao.appendChild(p);
+        Balao.appendChild(p);
 
-    ContainerMensagem.appendChild(Balao);
+        ContainerMensagem.appendChild(Balao);
     });
 }
 
@@ -213,6 +349,8 @@ function CriarContato() {
     const contato = document.createElement("div")
     const titulo = document.createElement("h4")
     const FotoPerfil = document.createElement("img")
+
+    const PlaceholderOriginal = InputPesquisar.placeholder
 
     if (nome === "") {
         nome = numero
@@ -240,6 +378,13 @@ function CriarContato() {
         titulo.textContent = nome
     }
 
+    if (contato.length === 13) {
+        InputPesquisar.placeholder = "Você conhece bastante gente"
+    }
+    else {
+        InputPesquisar.placeholder = PlaceholderOriginal
+    }
+
     ChatContatos.appendChild(contato)
     contato.appendChild(titulo)
     contato.append(FotoPerfil);
@@ -256,7 +401,7 @@ function CriarContato() {
         ContatoAtual = NovoContato
         NomeContato.textContent = NovoContato.nome;
         RenderizarMensagens()
-    }); 
+    });
 
     contatos.push(NovoContato)
 
@@ -340,7 +485,7 @@ OpenSidebar.addEventListener("click", () => {
                 body.classList.remove("calendarioChat", "notaChat")
             }
             else {
-                 body.classList.remove("calendario", "nota")
+                body.classList.remove("calendario", "nota")
             }
         }
         else if (ButtonWidget === BtnNota) {
@@ -372,7 +517,7 @@ add.addEventListener("click", () => {
 
 [InputNome, InputNumero].forEach((InputsContato) => {
     InputsContato.addEventListener("keydown", (e) => {
-        if(e.key === "Enter") {
+        if (e.key === "Enter") {
             CriarContato();
         }
     })
@@ -380,12 +525,12 @@ add.addEventListener("click", () => {
 
 [InputMensagemChat, enviar, InputNota].forEach((TextareaEnviar) => {
     if (TextareaEnviar === InputMensagemChat) {
-    InputMensagemChat.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-        Mensagem();
-        InputMensagemChat.value = ""
-    }
-    })
+        InputMensagemChat.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                Mensagem();
+                InputMensagemChat.value = ""
+            }
+        })
     }
     else if (TextareaEnviar === enviar) {
         enviar.addEventListener("click", () => {
@@ -449,6 +594,8 @@ document.addEventListener("keydown", (e) => {
         ContainerMensagem.innerHTML = ""
     }
 })
+
+// easter eggs
 
 // função
 

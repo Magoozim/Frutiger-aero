@@ -95,6 +95,45 @@ body {
     box-sizing: border-box;
 }
 
+.agua-fish {
+    width: 100%;
+    height: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: end;
+    flex-direction: column-reverse;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(123, 231, 255, 0.40) 15%, rgba(83, 199, 255, 0.65) 50%, rgba(0, 157, 255, 0.85) 100%);
+    backdrop-filter: blur(6px) saturate(140%) hue-rotate(-10deg);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: inset 0 30px 60px rgba(255, 255, 255, 0.35), inset 0 -20px 40px rgba(0, 80, 180, 0.4), 0 0 50px rgba(83, 199, 255, 0.6);
+    transition: all 1s;
+}
+
+.agua-fish::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 50%;
+    background: repeating-linear-gradient(90deg, transparent 0px, rgba(255,255,255,0.05), transparent 40px);
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.container-golfinho {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    transform: translateX(130%);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    transition: all 5s ease;
+}
+
 /* barra superior */
 
 header {
@@ -610,7 +649,6 @@ main {
     backdrop-filter: blur(10px);
     border-radius: 20px;
     position: relative;
-    z-index: 999;
     transition: all 0.4s ease;
     width: 50px;
     display: flex;
@@ -1096,6 +1134,60 @@ body.SelecionarContato .item {
         background: var(--reflection);
         transform: rotate(180deg);
     }
+}
+
+/* Classes de easter eggs */
+
+body.EasterEgg-Evilaero {
+    background-image: url(Imagens/Fundo\ Evil\ aero.webp);
+}
+
+body.EasterEgg-WindowsXP {
+    background-image: url(Imagens/Windows\ XP.jpeg);
+}
+
+body.EasterEgg-WindowsVista {
+    background-image: url(Imagens/WIndows\ Vista.jpg);
+}
+
+
+body.EasterEgg-aero .sidebar-direita,
+body.EasterEgg-aero .sidebar-esquerda div,
+body.EasterEgg-aero .header-body,
+body.EasterEgg-aero article {
+    filter: blur(50px);
+}
+
+
+body.EasterEgg-AquaBody,
+html.EasterEgg-AquaBody {
+    margin: 0;
+}
+
+body.EasterEgg-agua .agua-fish {
+    height: 100%;
+}
+
+body.EasterEgg-golfinho .container-golfinho {
+    transform: translateX(-130%);
+}
+
+
+body.EasterEgg-null p,
+body.EasterEgg-null h1,
+body.EasterEgg-null label,
+body.EasterEgg-null ::placeholder,
+body.EasterEgg-null h2,
+body.EasterEgg-null h4,
+body.EasterEgg-null span,
+body.EasterEgg-null button {
+    display: none;
+    font-size: 0;
+}
+
+
+body.EasterEgg-frutiger {
+    backdrop-filter: saturate(350%);
 }
 
 /* scroll */
