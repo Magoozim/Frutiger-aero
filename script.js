@@ -21,6 +21,7 @@ const SemNotas = document.getElementById("sem-notas");
 const InputMensagem = document.getElementById("input-mensagem");
 const InputNumero = document.getElementById("input-numero");
 const InputNome = document.getElementById("input-nome");
+const InputTitulo = document.getElementById("input-titulo");
 const ListaContatos = document.getElementById("lista-contatos");
 const add = document.getElementById("add");
 const ChatContatos = document.getElementById("chat-contatos")
@@ -30,8 +31,11 @@ const InputMensagemChat = document.getElementById("input");
 const enviar = document.getElementById("enviar");
 const InputFoto = document.getElementById("input-foto");
 const BtnConfirmar = document.getElementById("btn-confirmar");
+const BtnCancelar = document.getElementById("btn-cancelar");
 const BtnMesagemRapida = document.getElementById("mensagem-rapida");
 const InputPesquisar = document.getElementById("input-pesquisar");
+const ContainerRelogio = document.getElementById("container-relogio");
+const SpanRelogio = document.getElementById("span-relogio");
 
 const Windows7 = document.getElementById("windows-7");
 const enchendo = document.getElementById("enchendo");
@@ -186,10 +190,11 @@ function NovaNota() {
     ContainerNotas.classList.add("Layout")
 
     const valor = InputNota.value.trim();
+    const valortitulo = InputTitulo.value.trim();
 
-    const nota = document.createElement("p")
+    const nota = document.createElement("span")
+    const titulo = document.createElement("h2")
     const ContainerNota = document.createElement("div")
-    const texto = document.createElement("span")
     const link = document.createElement("a")
     const ContainerInferior = document.createElement("div")
     const ContainerBtns = document.createElement("div")
@@ -201,12 +206,14 @@ function NovaNota() {
     BtnEditar.textContent = "Editar"
     BtnExcluir.textContent = "Excluir"
     BtnMais.textContent = "Mais ⬇︎"
+    titulo.textContent = valortitulo
     nota.textContent = valor
     nota.dataset.TextoCompleto = valor
     link.href = "https://youtube.com/@Magoozim_games"
     link.textContent = valor
 
     ContainerNotas.appendChild(ContainerNota)
+    ContainerNota.appendChild(titulo)
     ContainerNota.appendChild(nota)
     ContainerNota.appendChild(link)
     ContainerNota.appendChild(ContainerInferior)
@@ -232,8 +239,12 @@ function NovaNota() {
         return;
     }
 
-    if (valor.length > 20) {
-        nota.textContent = valor.slice(0, 20) + "..."
+    if (valortitulo === "") {
+        titulo.textContent = "Sem Título"
+    }
+
+    if (valor.length > 30) {
+        nota.textContent = valor.slice(0, 30) + "..."
     }
     else {
         nota.textContent = nota.dataset.TextoCompleto
@@ -249,7 +260,7 @@ function NovaNota() {
             expandido = true
         }
         else {
-            nota.textContent = nota.dataset.TextoCompleto.slice(0, 20) + "..."
+            nota.textContent = nota.dataset.TextoCompleto.slice(0, 30) + "..."
             BtnMais.textContent = "Mais ⬇︎"
             expandido = false
         }
@@ -369,7 +380,7 @@ function CriarContato() {
     titulo.dataset.NumeroCompleto = numero
 
     if (numero.length > 13) {
-        titulo.textContent = numero.slice(0, 12) + "..."
+        titulo.textContent = numero.slice(0, 13) + "..."
     }
     else if (nome.length > 12) {
         titulo.textContent = nome.slice(0, 12) + "..."
@@ -424,20 +435,43 @@ BtnView.addEventListener("click", () => {
     }
 });
 
-BtnConfirmar.addEventListener("click", () => {
-    if (body.classList.contains("inputnota")) {
-        NovaNota();
+[BtnConfirmar, BtnCancelar].forEach((ButtonAction) => {
+    if (ButtonAction === BtnConfirmar) {
+        BtnConfirmar.addEventListener("click", () => {
+            if (body.classList.contains("inputnota")) {
+                NovaNota();
+            }
+            else if (body.classList.contains("inputcontato")) {
+                CriarContato();
+            }
+            else if (body.classList.contains("inputmensagemrapida")) {
+                Mensagem();
+            }
+            else {
+                return;
+            }
+        })
     }
-    else if (body.classList.contains("inputcontato")) {
-        CriarContato();
+    else if (ButtonAction === BtnCancelar) {
+        BtnCancelar.addEventListener("click", () => {
+            if (body.classList.contains("inputnota")) {
+                body.classList.remove("inputnota")
+                return
+            }
+            else if (body.classList.contains("inputcontato")) {
+                body.classList.remove("inputcontato")
+                return
+            }
+            else if (body.classList.contains("inputmensagemrapida")) {
+                body.classList.remove("inputmensagemrapida")
+                return
+            }
+            else {
+                return
+            }
+        })
     }
-    else if (body.classList.contains("inputmensagemrapida")) {
-        Mensagem();
-    }
-    else {
-        return;
-    }
-})
+});
 
 OpenSidebar.addEventListener("click", () => {
     body.classList.toggle("sidebar");
@@ -453,17 +487,20 @@ OpenSidebar.addEventListener("click", () => {
     ButtonHeader.addEventListener("click", () => {
         if (ButtonHeader === BtnMensagem) {
             NavBtn.classList.add("btn-deslizante")
-            body.classList.add("chat")
+            body.classList.add("chat", "chatTempo")
             body.classList.remove("calendario", "nota", "inputnota", "inputnota", "inputmensagemrapida")
             InputMensagemChat.focus()
         }
         else if (ButtonHeader === BtnMenu) {
             NavBtn.classList.remove("btn-deslizante")
             body.classList.remove("chat", "calendarioChat", "notaChat", "inputcontato")
+            setTimeout(() => {
+                body.classList.remove("chatTempo")
+            }, 300)
         }
         else {
             NavBtn.classList.remove("btn-deslizante")
-            body.classList.remove("chat")
+            body.classList.remove("chat", "chatTempo")
         }
     })
 });
@@ -506,7 +543,7 @@ OpenSidebar.addEventListener("click", () => {
 
 BtnNovaNota.addEventListener("click", () => {
     body.classList.add("inputnota");
-    InputNota.focus();
+    InputTitulo.focus();
 });
 
 
@@ -545,6 +582,7 @@ add.addEventListener("click", () => {
                 e.preventDefault();
                 NovaNota();
                 body.classList.add("nota")
+                InputTitulo.value = ""
             }
         })
     }
@@ -592,6 +630,39 @@ document.addEventListener("keydown", (e) => {
         ContatoAtual = null
         NomeContato.textContent = ""
         ContainerMensagem.innerHTML = ""
+    }
+});
+
+InputTitulo.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        InputNota.focus(NovaNota);
+    }
+});
+
+let contador = 0
+
+ContainerRelogio.addEventListener("click", () => {
+    contador++
+    console.log(contador)
+    if (contador === 25) {
+        body.classList.add("EasterEgg-span")
+        setTimeout(() => {
+            body.classList.remove("EasterEgg-span")
+        }, 3000)
+    }
+    else if (contador === 50) {
+        body.classList.add("EasterEgg-span")
+        setTimeout(() => {
+            body.classList.remove("EasterEgg-span")
+        }, 3000)
+        SpanRelogio.textContent = "CHEGA!!!" 
+    }
+    else if (contador === 100) {
+        body.classList.add("EasterEgg-span")
+        setTimeout(() => {
+            body.classList.remove("EasterEgg-span")
+        }, 3000)
+        SpanRelogio.textContent = "Por favor, PARA!"
     }
 })
 

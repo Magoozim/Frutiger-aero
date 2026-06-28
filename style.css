@@ -442,6 +442,16 @@ main {
     text-shadow: 0 0 10px var(--glow-blue);
 }
 
+#span-relogio {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px var(--deep-ocean);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s ease;
+}
+
 .container-calendario {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -513,6 +523,7 @@ main {
     border-radius: 20px;
     position: relative;
     opacity: 1;
+    scale: 1;
     transition: all 0.4s ease;
 }
 
@@ -560,19 +571,19 @@ main {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     border-radius: 0;
     text-shadow: 0 0 10px var(--sky-deep);
     padding: 5px;
     border-bottom: 1px solid var(--glass-border);
-    font-size: 20px;
     position: relative;
 }
 
-.container-notas p {
+.container-notas span {
     width: 100%;
     white-space: pre-wrap;
     overflow-wrap: break-word;
+    margin-bottom: 10px;
+    color: rgb(180, 180, 180);
 }
 
 .container-inferior {
@@ -751,7 +762,7 @@ main {
 }
 
 .btn-confirmar {
-    background: var(--glass-bg);
+    background: linear-gradient(135deg, var(--glass-bg), rgb(0, 255, 0));
     border: 1px solid var(--glass-border);
     padding: 12px;
     width: 100%;
@@ -760,6 +771,27 @@ main {
 }
 
 .btn-confirmar::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 20px;
+    background: var(--reflection);
+    pointer-events: none;
+}
+
+.btn-cancelar {
+    background: linear-gradient(135deg, var(--glass-bg), rgb(255, 0, 0));
+    border: 1px solid var(--glass-border);
+    padding: 12px;
+    width: 100%;
+    border-radius: 20px;
+    position: relative;  
+}
+
+.btn-cancelar::before {
     content: "";
     position: absolute;
     width: 100%;
@@ -992,9 +1024,10 @@ body.chat .view {
 
 body.chat .container-musica {
     opacity: 0;
+    scale: 0.95;
 }
 
-body.chat .widget-visualizações {
+body.chatTempo .widget-visualizações {
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -1088,7 +1121,8 @@ body.inputnota label {
 body.inputcontato #input-nota,
 body.inputcontato #input-mensagem,
 body.inputcontato #lista-contatos,
-body.inputcontato #input-foto {
+body.inputcontato #input-foto,
+body.inputcontato #input-titulo {
     display: none;
 }
 
@@ -1096,7 +1130,8 @@ body.inputmensagemrapida #input-nota,
 body.inputmensagemrapida #input-foto,
 body.inputmensagemrapida #input-nome,
 body.inputmensagemrapida #input-numero,
-body.inputmensagemrapida label {
+body.inputmensagemrapida label,
+body.inputmensagemrapida #input-titulo {
     display: none;
 }
 
@@ -1188,6 +1223,11 @@ body.EasterEgg-null button {
 
 body.EasterEgg-frutiger {
     backdrop-filter: saturate(350%);
+}
+
+
+body.EasterEgg-span #span-relogio {
+    opacity: 1; 
 }
 
 /* scroll */

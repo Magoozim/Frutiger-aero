@@ -34,6 +34,7 @@
                 <div class="widget-visualizações" id="widget-visualizações">
                     <div class="container-relogio" id="container-relogio">
                         <h2 id="horario" title="Horário atual">00:00:00</h2>
+                        <span id="span-relogio">Pare de clicar em mim!</span>
                     </div>
                     <div class="container-calendario" id="container-calendario">
                         <h2 id="data" title="Data atual">00/00/0000</h2>
@@ -77,6 +78,7 @@
                 <button class="mensagem-rapida" id="mensagem-rapida" title="Mensagem rápida">Mensagem Rápida</button>
             </div>
             <div class="input-area" id="input-area">
+                <input type="text" id="input-titulo" placeholder="Digite o título (opicional)">
                 <textarea id="input-nota" placeholder="Digite sua Nota"></textarea>
                 <div class="lista-contatos" id="lista-contatos"></div>
                 <input type="text" id="input-mensagem" placeholder="Digite sua mensagem">
@@ -85,6 +87,7 @@
                 <input type="file" id="input-foto" hidden>
                 <label for="input-foto">Enviar foto</label>
                 <button class="btn-confirmar" id="btn-confirmar">Confirmar</button>
+                <button class="btn-cancelar" id="btn-cancelar">Cancelar</button>
             </div>
             <div class="chat-contatos" id="chat-contatos"></div>
         </aside>
