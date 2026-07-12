@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=overlays-content">
     <title>Nimbus - Seu espaço digital</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile_cascata.css">
     <link rel="icon" href="Imagens/LogoHead.png">
 </head>
 
@@ -24,12 +25,21 @@
         </div>
     </header>
     <main>
+        <div class="overlay-widget" id="overlay-widget"></div>
         <aside class="sidebar-esquerda">
             <div class="container-widget" id="container-widget">
                 <header class="header-widget" id="header-widget">
-                    <button class="btn-relogio" id="btn-relogio" title="Relógio"><img src="Windows 7 Icons/370.png"></button>
-                    <button class="btn-calendario" id="btn-calendario" title="Calendário"><img src="Windows 7 Icons/398.png"></button>
+                    <button class="btn-fechar" id="btn-fechar" title="Fechar"><img
+                            src="Windows 7 Icons/262.png"></button>
+                    <button class="btn-relogio" id="btn-relogio" title="Relógio"><img
+                            src="Windows 7 Icons/370.png"></button>
+                    <button class="btn-calendario" id="btn-calendario" title="Calendário"><img
+                            src="Windows 7 Icons/398.png"></button>
                     <button class="btn-nota" id="btn-nota" title="Notas"><img src="Windows 7 Icons/092.png"></button>
+                    <button class="btn-musica" id="btn-musica" title="Música"><img
+                            src="Windows 7 Icons/517.png"></button>
+                    <button class="open-sidebar" id="open-sidebar" title="Abrir barra lateral"><img
+                            src="Windows 7 Icons/386.png"></button>
                 </header>
                 <div class="widget-visualizações" id="widget-visualizações">
                     <div class="container-relogio" id="container-relogio">
@@ -39,20 +49,30 @@
                     <div class="container-calendario" id="container-calendario">
                         <h2 id="data" title="Data atual">00/00/0000</h2>
                     </div>
-                <div class="container-nota" id="container-nota">
-                    <div class="notas">
-                        <span id="sem-notas">Sem Notas</span>
+                    <div class="container-nota" id="container-nota">
+                        <div class="notas">
+                            <span id="sem-notas">Sem Notas</span>
+                        </div>
+                    </div>
+                    <div class="container-musica-widget" id="container-musica-widget">
+                        <div class="container-musica-img">
+                            <img src="Windows 7 Icons/517.png" class="musica-icone">
+                        </div>
+                        <div class="musica-btn-widget">
+                            <button><img src="Windows 7 Icons/469.png"></button>
+                            <button class="pause" id="pause"><img src="Windows 7 Icons/472.png"></button>
+                            <button><img src="Windows 7 Icons/481.png"></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="container-musica" id="container-musica">
-                <img src="Windows 7 Icons/517.png" class="musica-icone">
-                <div class="musica-btn">
-                    <button><img src="Windows 7 Icons/469.png"></button>
-                    <button class="pause" id="pause"><img src="Windows 7 Icons/472.png"></button>
-                    <button><img src="Windows 7 Icons/481.png"></button>
+                <div class="container-musica" id="container-musica">
+                    <img src="Windows 7 Icons/517.png" class="musica-icone">
+                    <div class="musica-btn">
+                        <button><img src="Windows 7 Icons/469.png"></button>
+                        <button class="pause" id="pause"><img src="Windows 7 Icons/472.png"></button>
+                        <button><img src="Windows 7 Icons/481.png"></button>
+                    </div>
                 </div>
-            </div>
         </aside>
         <article>
             <header id="header-main" class="header-main">
@@ -62,16 +82,19 @@
                 <div class="container-mensagem" id="container-mensagem"></div>
             </div>
             <div class="container-input">
-            <textarea class="input" id="input" placeholder="Mensagem..."></textarea> <button class="enviar" id="enviar" title="Enviar mensagem"><img src="Windows 7 Icons/012.png"></button>
+                <textarea class="input" id="input" placeholder="Mensagem..."></textarea> <button class="enviar"
+                    id="enviar" title="Enviar mensagem"><img src="Windows 7 Icons/012.png"></button>
             </div>
         </article>
         <aside class="sidebar-direita">
             <header class="header-menu">
-                <button class="open-sidebar" id="open-sidebar" title="Abrir barra lateral"><img src="SVGs/menu-svgrepo-com - cópia.svg"></button>
-                <button class="add" id="add"><img src="SVGs/plus-svgrepo-com - cópia.svg" title="Adicionar contato"></button>
+                <button class="open-sidebar" id="open-sidebar" title="Abrir barra lateral"><img
+                        src="SVGs/menu-svgrepo-com - cópia.svg"></button>
+                <button class="add" id="add"><img src="SVGs/plus-svgrepo-com - cópia.svg"
+                        title="Adicionar contato"></button>
             </header>
             <div class="input-area-pesquisar">
-            <input type="search" id="input-pesquisar" class="input-pesquisar" placeholder="Pesquisar Contato">
+                <input type="search" id="input-pesquisar" class="input-pesquisar" placeholder="Pesquisar Contato">
             </div>
             <div class="container-btn-sidebar-direita">
                 <button class="nova-nota" id="nova-nota" title="Criar nova nota">Nova Nota</button>
@@ -92,16 +115,16 @@
             <div class="chat-contatos" id="chat-contatos"></div>
         </aside>
         <div id="audios" class="audios">
-        <audio id="windows-7" src="sons/windows-7-startup.mp3"></audio>
-        <audio id="enchendo" src="sons/enchendo-.wav"></audio>
-        <audio id="agua" src="sons/Agua.mp3"></audio>
-        <audio id="bolhas" src="sons/bolhas.mp3"></audio>
-        <audio id="golfinho" src="sons/golfinho.mp3"></audio>
-        <audio id="windows-XP" src="sons/WindowsXP.mp3"></audio>
+            <audio id="windows-7" src="sons/windows-7-startup.mp3"></audio>
+            <audio id="enchendo" src="sons/enchendo-.wav"></audio>
+            <audio id="agua" src="sons/Agua.mp3"></audio>
+            <audio id="bolhas" src="sons/bolhas.mp3"></audio>
+            <audio id="golfinho" src="sons/golfinho.mp3"></audio>
+            <audio id="windows-XP" src="sons/WindowsXP.mp3"></audio>
         </div>
     </main>
-        <div class="container-golfinho"><img src="Imagens/golfinho.png" class="img-peixe"></div>
-        <div class="agua-fish" id="agua-fish"></div>
+    <div class="container-golfinho"><img src="Imagens/golfinho.png" class="img-peixe"></div>
+    <div class="agua-fish" id="agua-fish"></div>
     <script src="script.js"></script>
 </body>
 

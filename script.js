@@ -6,10 +6,11 @@ const HeaderBody = document.getElementById("header-body");
 const BtnMenu = document.getElementById("btn-menu");
 const BtnMensagem = document.getElementById("btn-mensagens");
 const NavBtn = document.getElementById("nav-btn");
-const OpenSidebar = document.getElementById("open-sidebar");
 const BtnRelogio = document.getElementById("btn-relogio");
 const BtnCalendario = document.getElementById("btn-calendario");
 const BtnNota = document.getElementById("btn-nota");
+const BtnMusica = document.getElementById("btn-musica");
+const BtnFechar = document.getElementById("btn-fechar");
 const horario = document.getElementById("horario")
 const data = document.getElementById("data");
 const InputArea = document.getElementById("input-area")
@@ -103,51 +104,56 @@ function EasterEggsNotas(valor, nota, link, ContainerNota) {
         body.classList.add("EasterEgg-aero")
     }
 
-    if (valor === "dolphin") {
-        body.classList.add("EasterEgg-AquaBody", "EasterEgg-agua")
-        FadeIn(enchendo)
-        setTimeout(() => {
-            FadeIn(agua)
-            FadeIn(bolhas)
-            FadeOut(enchendo)
-        }, 1000)
-        setTimeout(() => {
-            body.classList.toggle("EasterEgg-golfinho")
-            FadeIn(golfinho)
-        }, 2000)
-        setTimeout(() => {
-            FadeOut(agua)
-            FadeOut(bolhas)
-            body.classList.remove("EasterEgg-AquaBody", "EasterEgg-agua")
-        }, 6000)
+    if (window, innerWidth >= 768) {
+        if (valor === "dolphin") {
+            body.classList.add("EasterEgg-AquaBody", "EasterEgg-agua")
+            FadeIn(enchendo)
+            setTimeout(() => {
+                FadeIn(agua)
+                FadeIn(bolhas)
+                FadeOut(enchendo)
+            }, 1000)
+            setTimeout(() => {
+                body.classList.toggle("EasterEgg-golfinho")
+                FadeIn(golfinho)
+            }, 2000)
+            setTimeout(() => {
+                FadeOut(agua)
+                FadeOut(bolhas)
+                body.classList.remove("EasterEgg-AquaBody", "EasterEgg-agua")
+            }, 6000)
 
-        function FadeOut(audio, velocidade = 0.02) {
-            const fade = setInterval(() => {
-                if (audio.volume > velocidade) {
-                    audio.volume -= velocidade;
-                } else {
-                    audio.volume = 0;
-                    audio.pause();
-                    audio.currentTime = 0;
-                    clearInterval(fade);
-                }
-            }, 50);
+            function FadeOut(audio, velocidade = 0.02) {
+                const fade = setInterval(() => {
+                    if (audio.volume > velocidade) {
+                        audio.volume -= velocidade;
+                    } else {
+                        audio.volume = 0;
+                        audio.pause();
+                        audio.currentTime = 0;
+                        clearInterval(fade);
+                    }
+                }, 50);
+            }
+
+            function FadeIn(audio, volumeFinal = 0.3, velocidade = 0.02) {
+                audio.currentTime = 0;
+                audio.volume = 0;
+                audio.play();
+
+                const fade = setInterval(() => {
+                    if (audio.volume < volumeFinal) {
+                        audio.volume += velocidade;
+                    } else {
+                        audio.volume = volumeFinal;
+                        clearInterval(fade);
+                    }
+                }, 50);
+            }
         }
-
-        function FadeIn(audio, volumeFinal = 0.3, velocidade = 0.02) {
-            audio.currentTime = 0;
-            audio.volume = 0;
-            audio.play();
-
-            const fade = setInterval(() => {
-                if (audio.volume < volumeFinal) {
-                    audio.volume += velocidade;
-                } else {
-                    audio.volume = volumeFinal;
-                    clearInterval(fade);
-                }
-            }, 50);
-        }
+    }
+    else {
+        return
     }
 
     if (valor === "root") {
@@ -187,8 +193,6 @@ function EasterEggsNotas(valor, nota, link, ContainerNota) {
 }
 
 function NovaNota() {
-    ContainerNotas.classList.add("Layout")
-
     const valor = InputNota.value.trim();
     const valortitulo = InputTitulo.value.trim();
 
@@ -281,6 +285,7 @@ function NovaNota() {
             else if (BtnNotas === BtnEditar) {
                 ContainerNota.remove();
                 body.classList.add("sidebar", "inputnota");
+                body.classList.remove("widget")
                 InputNota.value = nota.dataset.TextoCompleto;
                 InputNota.focus();
             }
@@ -379,22 +384,7 @@ function CriarContato() {
     titulo.dataset.NomeCompleto = nome
     titulo.dataset.NumeroCompleto = numero
 
-    if (numero.length > 13) {
-        titulo.textContent = numero.slice(0, 13) + "..."
-    }
-    else if (nome.length > 12) {
-        titulo.textContent = nome.slice(0, 12) + "..."
-    }
-    else {
-        titulo.textContent = nome
-    }
-
-    if (contato.length === 13) {
-        InputPesquisar.placeholder = "Você conhece bastante gente"
-    }
-    else {
-        InputPesquisar.placeholder = PlaceholderOriginal
-    }
+    AtualizarTituloContato(titulo)
 
     ChatContatos.appendChild(contato)
     contato.appendChild(titulo)
@@ -412,6 +402,7 @@ function CriarContato() {
         ContatoAtual = NovoContato
         NomeContato.textContent = NovoContato.nome;
         RenderizarMensagens()
+        body.classList.remove("sidebar")
     });
 
     contatos.push(NovoContato)
@@ -440,12 +431,15 @@ BtnView.addEventListener("click", () => {
         BtnConfirmar.addEventListener("click", () => {
             if (body.classList.contains("inputnota")) {
                 NovaNota();
+                InputTitulo.value = ""
+                body.classList.remove("sidebar")
             }
             else if (body.classList.contains("inputcontato")) {
                 CriarContato();
             }
             else if (body.classList.contains("inputmensagemrapida")) {
                 Mensagem();
+                body.classList.remove("inputmensagemrapida", "sidebar")
             }
             else {
                 return;
@@ -456,6 +450,8 @@ BtnView.addEventListener("click", () => {
         BtnCancelar.addEventListener("click", () => {
             if (body.classList.contains("inputnota")) {
                 body.classList.remove("inputnota")
+                InputNota.value = ""
+                InputTitulo.value = ""
                 return
             }
             else if (body.classList.contains("inputcontato")) {
@@ -473,23 +469,33 @@ BtnView.addEventListener("click", () => {
     }
 });
 
-OpenSidebar.addEventListener("click", () => {
-    body.classList.toggle("sidebar");
-    if (body.classList.contains("sidebar")) {
-        return
-    }
-    else {
-        body.classList.remove("inputnota", "inputcontato", "inputmensagemrapida")
-    }
+document.querySelectorAll(".open-sidebar").forEach((BTNSsidebar) => {
+    BTNSsidebar.addEventListener("click", () => {
+        body.classList.toggle("sidebar");
+        if (body.classList.contains("sidebar")) {
+            if (body.classList.contains("widget")) {
+                body.classList.remove("widget")
+                setTimeout(() => {
+                    body.classList.remove("calendario", "nota", "musica")
+                }, 500)
+            }
+        }
+        else {
+            body.classList.remove("inputnota", "inputcontato", "inputmensagemrapida")
+        }
+    });
 });
 
 [BtnMensagem, BtnMenu].forEach((ButtonHeader) => {
     ButtonHeader.addEventListener("click", () => {
         if (ButtonHeader === BtnMensagem) {
             NavBtn.classList.add("btn-deslizante")
-            body.classList.add("chat", "chatTempo")
+            body.classList.add("chat")
             body.classList.remove("calendario", "nota", "inputnota", "inputnota", "inputmensagemrapida")
-            InputMensagemChat.focus()
+            if (window.innerWidth >= 769) {
+                InputMensagemChat.focus()
+                body.classList.add("chatTempo")
+            }
         }
         else if (ButtonHeader === BtnMenu) {
             NavBtn.classList.remove("btn-deslizante")
@@ -505,38 +511,74 @@ OpenSidebar.addEventListener("click", () => {
     })
 });
 
-[BtnCalendario, BtnRelogio, BtnNota].forEach((ButtonWidget) => {
+[BtnCalendario, BtnRelogio, BtnNota, BtnMusica, BtnFechar].forEach((ButtonWidget) => {
     ButtonWidget.addEventListener("click", () => {
+        const EstavaFechado = !body.classList.contains("widget")
+        body.classList.add("widget")
+        if (body.classList.contains("sidebar")) {
+            body.classList.remove("sidebar")
+        }
+
         if (ButtonWidget === BtnCalendario) {
-            if (body.classList.contains("chat")) {
+            if (body.classList.contains("chat") && window.innerWidth >= 769) {
                 body.classList.add("calendarioChat")
                 body.classList.remove("notaChat")
             }
+            else if (EstavaFechado) {
+                setTimeout(() => {
+                    body.classList.add("calendario")
+                    body.classList.remove("nota")
+                }, 500)
+            }
             else {
                 body.classList.add("calendario")
-                body.classList.remove("nota")
+                body.classList.remove("nota", "musica")
             }
         }
         else if (ButtonWidget === BtnRelogio) {
-            if (body.classList.contains("chat")) {
+            if (body.classList.contains("chat") && window.innerWidth >= 769) {
                 body.classList.remove("calendarioChat", "notaChat")
             }
             else {
-                body.classList.remove("calendario", "nota")
+                body.classList.remove("calendario", "nota", "musica")
             }
         }
+        else if (ButtonWidget === BtnFechar) {
+            body.classList.remove("widget")
+            setTimeout(() => {
+                body.classList.remove("calendario", "nota", "musica");
+            }, 500)
+        }
         else if (ButtonWidget === BtnNota) {
-            if (body.classList.contains("chat")) {
+            if (body.classList.contains("chat") && window.innerWidth >= 769) {
                 body.classList.add("notaChat")
                 body.classList.remove("calendarioChat")
             }
+            else if (EstavaFechado) {
+                setTimeout(() => {
+                    body.classList.add("nota")
+                    body.classList.remove("calendario")
+                }, 500)
+            }
             else {
                 body.classList.add("nota")
-                body.classList.remove("calendario")
+                body.classList.remove("calendario", "musica")
+            }
+        }
+        else if (ButtonWidget === BtnMusica) {
+            if (EstavaFechado) {
+                setTimeout(() => {
+                    body.classList.add("musica")
+                    body.classList.remove("calendario", "nota")
+                }, 500)
+            }
+            else {
+                body.classList.add("musica")
+                body.classList.remove("calendario", "nota")
             }
         }
         else {
-            body.classList.remove("calendario", "nota", "calendarioChat", "notaChat")
+            body.classList.remove("calendario", "nota", "calendarioChat", "notaChat", "musica")
         }
     })
 });
@@ -583,6 +625,10 @@ add.addEventListener("click", () => {
                 NovaNota();
                 body.classList.add("nota")
                 InputTitulo.value = ""
+                body.classList.remove("sidebar")
+                if (window.innerWidth <= 768) {
+                    body.classList.add("widget")
+                }
             }
         })
     }
@@ -609,6 +655,7 @@ InputMensagem.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         Mensagem();
         InputMensagem.value = ""
+        body.classList.remove("sidebar")
     }
     else if (e.key === "Escape") {
         body.classList.remove("inputmensagemrapida")
@@ -655,7 +702,7 @@ ContainerRelogio.addEventListener("click", () => {
         setTimeout(() => {
             body.classList.remove("EasterEgg-span")
         }, 3000)
-        SpanRelogio.textContent = "CHEGA!!!" 
+        SpanRelogio.textContent = "CHEGA!!!"
     }
     else if (contador === 100) {
         body.classList.add("EasterEgg-span")
@@ -677,3 +724,37 @@ DataAtual();
 setInterval(DataAtual, 1000);
 
 BordaNotas();
+
+// mobile
+
+function AtualizarTituloContato(titulo) {
+    const nome = titulo.dataset.NomeCompleto
+    const numero = titulo.dataset.NumeroCompleto
+
+    if (window.innerWidth < 769) {
+        if (numero.length > 8) {
+            titulo.textContent = numero.slice(0, 8) + "..."
+        }
+        else if (nome.length > 9) {
+            titulo.textContent = nome.slice(0, 9) + "..."
+        }
+        else {
+            titulo.textContent = nome
+        }
+    }
+    else {
+        if (numero.length > 13) {
+            titulo.textContent = numero.slice(0, 13) + "..."
+        }
+        else if (nome.length > 12) {
+            titulo.textContent = nome.slice(0, 12) + "..."
+        }
+        else {
+            titulo.textContent = nome
+        }
+    }
+}
+
+window.addEventListener("resize", () => {
+    document.querySelectorAll(".contato h4").forEach(AtualizarTituloContato)
+})

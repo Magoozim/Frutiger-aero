@@ -1,0 +1,609 @@
+/* base/celular comum */
+
+@media (max-width: 1366px) {
+
+    /* body */
+
+    html {
+        height: 100dvh;
+        overflow: hidden;
+        overscroll-behavior: none;
+    }
+
+    body {
+        background-image: url(Imagens/fundo\ celular.webp);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        min-height: 100dvh;
+        overscroll-behavior: none;
+        display: grid;
+        overflow: hidden;
+        margin: 0;
+        padding: 8px;
+        box-sizing: border-box;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+        "header"
+        "main";
+    }
+
+    .container-golfinho,
+    .agua-fish {
+        display: none;
+    }
+
+    /* topo */
+
+    .header-body {
+        grid-area: header;
+        width: 95dvw;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .view {
+        display: none;
+    }
+
+    .nav-btn {
+        position: static;
+        transform: translateX(0);
+    }
+
+    .nav-btn button {
+        font-size: 16px;
+        padding: 15px;
+    }
+
+    .nav-btn::before {
+        width: 45%;
+        top: 0;
+        right: 105px;
+    }
+
+    .logo img {
+        height: 55px;
+        width: 55px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    /* main */
+
+    main {
+        grid-area: main;
+        display: grid;
+        position: relative;
+        min-height: 0;
+        min-width: 0;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+        grid-template-areas:
+        "chat"
+        "icons";
+    }
+
+    article {
+        grid-area: chat;
+        transition: all 0.4s ease;
+        min-height: 0;
+        height: 100%;
+        width: 99%;
+        pointer-events: auto;
+    }
+
+    .input {
+        height: 37px;
+        line-height: 15px;
+    }
+
+    .enviar {
+        padding: 6px;
+    }
+
+    .enviar img {
+        height: 25px;
+        width: 25px;
+    }
+
+    .header-main {
+        height: 45px;
+    }
+
+    .balao {
+        font-size: 14px;
+    }
+
+    /* icones */
+
+    .sidebar-esquerda {
+        grid-area: icons;
+        display: flex; 
+        flex-direction: column;
+    }
+
+    .widget-visualizações {
+        position: fixed;
+        top: 100%;
+        width: 100%;
+        overflow: hidden;
+        z-index: 60;
+        transition: all 0.5s ease;
+    }
+
+    .widget-visualizações > div {
+        min-width: 0;
+        width: 95%;
+        max-width: 100%;
+        flex-shrink: 0;
+    }
+
+    .overlay-widget {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.16);
+        pointer-events: none;
+        z-index: 55;
+        transition: all 0.5s ease;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 20px 20px 0 0;
+    }
+
+    .overlay-widget::before {
+        content: "";
+        width: 100%;
+        height: 50%;
+        border-radius: 20px 20px 0 0;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 0;
+        pointer-events: none;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65), transparent);
+    }
+
+    .header-widget {
+        max-width: 100%;
+        width: 95dvw;
+        position: relative;
+        z-index: 60;
+    }
+
+    .container-inferior {
+        opacity: 1;
+    }
+
+    .header-widget .open-sidebar {
+        display: inline-block;
+    }
+
+    .header-widget .open-sidebar img {
+        filter: none;
+        height: 35px;
+        width: 35px;
+    }
+
+    .btn-musica {
+        display: inline-block;
+    }
+
+    .btn-fechar {
+        display: inline-block;
+    }
+
+    .container-musica {
+        display: none;
+    }
+
+    .container-musica-widget {
+        display: grid;
+        opacity: 0;
+        transform: translate(-200%, 0);
+        transition: all 0.4s ease;
+        background-color: rgba(255, 255, 255, 0.16);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 20px;
+        padding: 10px;
+        position: relative;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+        "DivBTN DivIMG";
+    }
+
+    .container-musica-widget::before {
+        content: "";
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65), transparent);
+        position: absolute;
+        border-radius: 20px;
+    }
+
+    .container-musica-img {
+        grid-area: DivIMG;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .container-musica-img::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 70%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65), transparent);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .musica-btn-widget {
+        grid-area: DivBTN;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .container-musica-img img {
+        height: 150px;
+    }
+
+    .musica-btn-widget img {
+        height: 40px;
+    }
+
+    .container-notas {
+        flex-shrink: 0;
+    }
+
+    .container-nota {
+        position: relative;
+    }
+
+    /* sidebar */
+
+    .open-sidebar {
+        display: none;
+    }
+
+    .sidebar-direita {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        top: 8px;
+        transform: translateX(120%);
+        height: 88dvh;
+        z-index: 100;
+    }
+
+    .header-menu {
+        height: 45px;
+    }
+
+    .container-btn-sidebar-direita {
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .container-btn-sidebar-direita button {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    input::placeholder,
+    textarea::placeholder,
+    input,
+    textarea,
+    label,
+    .btn-cancelar,
+    .btn-confirmar {
+        font-size: 11px;
+    }
+
+    .add img {
+        height: 25px;
+        width: 25px;
+    }
+
+    .add {
+        filter: brightness(0.8);
+    }
+
+    .lista-contatos {
+        width: 90%;
+        height: 20dvh;
+    }
+
+    .contato {
+        font-size: 15px;
+    }
+
+    .contato img {
+        height: 30px;
+    }
+
+    /* hover */
+    
+    .nav-btn button:hover {
+        font-size: 16px;
+    }
+
+    .widget-visualizações div:hover {
+        box-shadow: none;
+    }
+
+    /* classes */
+
+    .nav-btn.btn-deslizante::before {
+        right: 5px;
+    }
+
+    body.chat .container-nota {
+        transform: translate(-100%, 0);
+    }
+
+    body.sidebar main {
+        grid-template-columns: 1fr;
+    }
+
+    body.sidebar .sidebar-direita {
+        width: 150px;
+        transform: translateX(0);
+    }
+
+    body.sidebar {
+        backdrop-filter: blur(10px) brightness(0.8) saturate(0.8);
+    }
+
+    body.sidebar .header-body,
+    body.sidebar article {
+        filter: blur(10px);
+    }
+
+    body.widget .widget-visualizações {
+        top: 50%;
+    }
+
+    body.widget .overlay-widget {
+        height: 55%;
+        pointer-events: auto;
+    }
+    
+    body.widget {
+        backdrop-filter: blur(10px) brightness(0.8) saturate(0.8);
+    }
+
+    body.widget .header-body,
+    body.widget article {
+        filter: blur(10px);
+        pointer-events: none;
+    }
+
+    body.musica .container-musica-widget {
+        opacity: 1;
+        transform: translate(-300%, 0);
+    }
+
+    body.musica .container-relogio,
+    body.musica .container-calendario,
+    body.musica .container-nota {
+        transform: translate(-310%, 0);
+    }
+
+    body.nota .container-nota {
+        transform: translate(-200%, 0);
+        opacity: 1;
+    }
+
+
+    /* Celular comum */
+
+    @media (min-width: 391px) {
+        body.sidebar .sidebar-direita {
+            width: 200px;
+        }
+
+        .header-widget img {
+            height: 37px;
+            width: 37px;
+        }
+
+        .header-body button {
+            padding: 17px;
+            font-size: 18px;
+        }
+
+        .nav-btn::before {
+            right: 115px;
+            width: 47%;
+            top: 3px
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        .logo img {
+            height: 70px;
+            width: 70px;
+        }
+
+        .nav-btn.btn-deslizante::before {
+            right: 0;
+        }
+
+        .container-btn-sidebar-direita button {
+            font-size: 18px;
+        }
+
+        input::placeholder,
+        textarea::placeholder,
+        input,
+        textarea,
+        label,
+        .btn-cancelar,
+        .btn-confirmar {
+            font-size: 15px;
+        }
+
+        .header-main {
+            height: 60px;
+        }
+
+        .input {
+            height: 45px;
+            line-height: 20px;
+        }
+
+        .enviar {
+            padding: 7px;
+        }
+
+        .contato {
+            font-size: 20px;
+        }
+
+        .contato img {
+            height: 38px;
+            width: 38px;
+        }
+
+        .header-menu {
+            height: 60px;
+        }
+
+        .add img {
+            height: 30px;
+            width: 30px;
+        }
+
+        .balao {
+            font-size: 17px;
+        }
+    }
+
+    /* Tablet */
+
+    @media (min-width: 768px) {
+        .header-body {
+            flex-direction: row;
+        }
+
+        .nav-btn button {
+            padding: 28px;
+            font-size: 23px;
+        }
+
+        .nav-btn button:hover {
+            font-size: 23px;
+        }
+
+        .nav-btn::before {
+            top: 7%;
+            height: 60%;
+            right: 160px;
+        }
+
+        .nav-btn.btn-deslizante::before {
+            right: 5px;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        .logo img {
+            height: 80px;
+            width: 80px;
+        }
+
+        .input {
+            height: 60px;
+            line-height: 35px;
+            font-size: 18px;
+        }
+
+        .input::placeholder {
+            font-size: 18px;
+        }
+
+        .enviar img {
+            height: 35px;
+            width: 35px;
+        }
+
+        .header-widget img,
+        .header-widget .open-sidebar img {
+            height: 45px;
+            width: 45px;
+        }
+
+        .header-widget {
+            width: 98dvw;
+        }
+
+        .widget-visualizações {
+            height: 400px;
+        }
+
+        .widget-visualizações > div {
+            height: 100%;
+            width: 98%;
+        }
+
+        #horario,
+        #data {
+            font-size: 50px;
+        }
+
+        #sem-notas {
+            font-size: 20px;
+        }
+
+        .container-musica-img img {
+            height: 250px;
+            width: 250px;
+        }
+
+        .container-musica-img::before {
+            height: 90%;
+        }
+
+        .musica-btn-widget img {
+            height: 60px;
+            width: 60px;
+        }
+
+        .container-notas span {
+            font-size: 25px;
+        }
+
+        .container-notas h2 {
+            font-size: 30px;
+        }
+
+        .container-notas button {
+            padding: 10px 20px;
+            font-size: 19px;
+        }
+
+        .container-btn-sidebar-direita button {
+            font-size: 20px;
+        }
+
+        body.sidebar .sidebar-direita {
+            width: 250px;
+        }
+
+        #nome-contato {
+            font-size: 24px;
+        }
+    }
+}
