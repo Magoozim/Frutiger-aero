@@ -104,7 +104,7 @@ function EasterEggsNotas(valor, nota, link, ContainerNota) {
         body.classList.add("EasterEgg-aero")
     }
 
-    if (window, innerWidth >= 768) {
+    if (window.innerWidth >= 768) {
         if (valor === "dolphin") {
             body.classList.add("EasterEgg-AquaBody", "EasterEgg-agua")
             FadeIn(enchendo)
