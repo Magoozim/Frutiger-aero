@@ -270,12 +270,6 @@ function NovaNota() {
         }
     })
 
-    if (ContainerNotas.children.length > 0) {
-        SemNotas.style.display = "none"
-    }
-    else if (ContainerNotas.children.length === 0) {
-        SemNotas.style.display = "block"
-    }
 
     [BtnExcluir, BtnEditar].forEach((BtnNotas) => {
         BtnNotas.addEventListener("click", () => {
@@ -296,17 +290,6 @@ function NovaNota() {
 
     InputNota.value = ""
     body.classList.remove("inputnota")
-}
-
-function BordaNotas() {
-    const notas = document.querySelectorAll(".container-notas");
-    notas.forEach(nota => {
-        nota.classList.remove("primeira", "ultima")
-    });
-    if (notas.length > 1) {
-        notas[0].classList.add("primeira");
-        notas[notas.length - 1].classList.add("ultima");
-    }
 }
 
 function CriarBalao(texto) {
@@ -515,7 +498,7 @@ document.querySelectorAll(".open-sidebar").forEach((BTNSsidebar) => {
     ButtonWidget.addEventListener("click", () => {
         const EstavaFechado = !body.classList.contains("widget")
         body.classList.add("widget")
-        if (body.classList.contains("sidebar")) {
+        if (window.innerWidth < 769 && body.classList.contains("sidebar")) {
             body.classList.remove("sidebar")
         }
 
@@ -524,6 +507,7 @@ document.querySelectorAll(".open-sidebar").forEach((BTNSsidebar) => {
                 body.classList.add("calendarioChat")
                 body.classList.remove("notaChat")
             }
+
             else if (EstavaFechado) {
                 setTimeout(() => {
                     body.classList.add("calendario")
@@ -722,8 +706,6 @@ setInterval(HorarioAtual, 1000);
 
 DataAtual();
 setInterval(DataAtual, 1000);
-
-BordaNotas();
 
 // mobile
 
