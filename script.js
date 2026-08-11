@@ -10,9 +10,31 @@ function EhMobile() {
     window.innerWidth < 769;
 }
 
+function relogio() {
+    const agora = new Date();
+    const hora = String(agora.getHours()).padStart(2, "0");
+    const minutos = String(agora.getMinutes()).padStart(2, "0");
+    const segundo = String(agora.getSeconds()).padStart(2, "0");
+    document.getElementById("horario").textContent = `${hora}:${minutos}:${segundo}`;
+}
+
+function data(agora) {
+    agora = new Date();
+    const dia = String(agora.getDate()).padStart(2, "0");
+    const mes = String(agora.getMonth() + 1).padStart(2, "0");
+    const ano = String(agora.getFullYear()).padStart(2, "0");
+    document.getElementById("data").textContent = `${dia}/${mes}/${ano}`;
+}
+
 // rodar funções
 
 EhMobile();
+
+relogio();
+setInterval(relogio, 1000);
+
+data();
+setInterval(data, 1000);
 
 // código
 
