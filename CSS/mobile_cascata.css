@@ -11,7 +11,7 @@
     }
 
     body {
-        background-image: url(Imagens/fundo\ celular.webp);
+        background-image: url(../Imagens/fundo\ celular.webp);
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;

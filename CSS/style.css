@@ -193,6 +193,10 @@ header {
 
 }
 
+body:has(.chat) .nav-btn::before { /* <---- ainda pra resolver */
+    right: 10px;
+}
+
 .nav-btn button {
     font-size: 18px;
     padding: 20px;
@@ -409,7 +413,34 @@ main {
 .widget-visualizações {
     display: flex;
     flex-direction: row;
+    overflow: hidden;
 }
+
+/* data-widgets */
+
+.widget-visualizações[data-widget="calendario"] .container-calendario {
+    transform: translateX(-100%);
+    opacity: 1;
+}
+
+.widget-visualizações[data-widget="calendario"] .container-relogio {
+    transform: translateX(-110%);
+    opacity: 0;
+}
+
+
+.widget-visualizações[data-widget="nota"] .container-nota {
+    transform: translateX(-200%);
+    opacity: 1;
+}
+
+.widget-visualizações[data-widget="nota"] .container-calendario,
+.widget-visualizações[data-widget="nota"] .container-relogio {
+    transform: translateX(-210%);
+    opacity: 0;
+}
+
+/* resto do código */
 
 .btn-musica {
     display: none; 
@@ -1000,12 +1031,12 @@ body.visualizar .view {
 }
 
 
-.nav-btn.btn-deslizante::before {
+/*.nav-btn.btn-deslizante::before {
     right: 10px;
-}
+}*/
 
 
-body.sidebar main {
+/*body.sidebar main {
     grid-template-columns: auto 1fr 220px;
 }
 
@@ -1021,7 +1052,7 @@ body.sidebar .input-area-pesquisar {
 
 body.sidebar .contato {
     opacity: 1;
-}
+}*/
 
 
 body.chat .add {
@@ -1043,7 +1074,7 @@ body.chat .container-musica {
     scale: 0.95;
 }
 
-body.chatTempo .widget-visualizações {
+body.chat .widget-visualizações {
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -1072,7 +1103,7 @@ body.chat .chat-contatos {
 }
 
 
-body.calendario .container-relogio {
+/*body.calendario .container-relogio {
     transform: translate(-110%, 0);
 }
 
@@ -1112,7 +1143,7 @@ body.nota .container-calendario {
 body.nota .container-nota {
     transform: translate(-200%, 0);
     opacity: 1;
-}
+}*/
 
 
 body.inputnota .input-area,

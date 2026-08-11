@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=overlays-content">
     <title>Nimbus - Seu espaço digital</title>
     <link rel="stylesheet" href="CSS/style.css">
-    <link rel="stylesheet" href="CSS/mobile_cascata.css">
+
     <link rel="icon" href="Imagens/LogoHead.png">
 </head>
 
@@ -41,7 +41,8 @@
                     <button class="open-sidebar" id="open-sidebar" title="Abrir barra lateral"><img
                             src="Windows 7 Icons/386.png"></button>
                 </header>
-                <div class="widget-visualizações" id="widget-visualizações">
+                <div data-widget="relogio" data-widget="calendario" data-widget="nota" class="widget-visualizações"
+                    id="widget-visualizações">
                     <div class="container-relogio" id="container-relogio">
                         <h2 id="horario" title="Horário atual">00:00:00</h2>
                         <span id="span-relogio">Pare de clicar em mim!</span>
@@ -50,7 +51,7 @@
                         <h2 id="data" title="Data atual">00/00/0000</h2>
                     </div>
                     <div class="container-nota" id="container-nota">
-                        <div class="notas">
+                        <div id="notas">
                             <span id="sem-notas">Sem Notas</span>
                         </div>
                     </div>
@@ -69,7 +70,7 @@
                     <img src="Windows 7 Icons/517.png" class="musica-icone">
                     <div class="musica-btn">
                         <button><img src="Windows 7 Icons/469.png"></button>
-                        <button class="pause" id="pause"><img src="Windows 7 Icons/472.png"></button>
+                        <button class="pause" id="BtnPause"><img src="Windows 7 Icons/472.png"></button>
                         <button><img src="Windows 7 Icons/481.png"></button>
                     </div>
                 </div>
@@ -88,29 +89,17 @@
         </article>
         <aside class="sidebar-direita">
             <header class="header-menu">
-                <button class="open-sidebar" id="open-sidebar" title="Abrir barra lateral"><img
+                <button class="open-sidebar" id="OpenSidebar" title="Abrir barra lateral"><img
                         src="SVGs/menu-svgrepo-com - cópia.svg"></button>
-                <button class="add" id="add"><img src="SVGs/plus-svgrepo-com - cópia.svg"
+                <button command="show-modal" commandFor="ModalContato" class="add" id="add"><img src="SVGs/plus-svgrepo-com - cópia.svg"
                         title="Adicionar contato"></button>
             </header>
             <div class="input-area-pesquisar">
                 <input type="search" id="input-pesquisar" class="input-pesquisar" placeholder="Pesquisar Contato">
             </div>
             <div class="container-btn-sidebar-direita">
-                <button class="nova-nota" id="nova-nota" title="Criar nova nota">Nova Nota</button>
-                <button class="mensagem-rapida" id="mensagem-rapida" title="Mensagem rápida">Mensagem Rápida</button>
-            </div>
-            <div class="input-area" id="input-area">
-                <input type="text" id="input-titulo" placeholder="Digite o título (opicional)">
-                <textarea id="input-nota" placeholder="Digite sua Nota"></textarea>
-                <div class="lista-contatos" id="lista-contatos"></div>
-                <input type="text" id="input-mensagem" placeholder="Digite sua mensagem">
-                <input type="number" id="input-numero" placeholder="Número">
-                <input type="text" id="input-nome" placeholder="nome">
-                <input type="file" id="input-foto" hidden>
-                <label for="input-foto">Enviar foto</label>
-                <button class="btn-confirmar" id="btn-confirmar">Confirmar</button>
-                <button class="btn-cancelar" id="btn-cancelar">Cancelar</button>
+                <button command="show-modal" commandFor="ModalNota" class="nova-nota" id="nova-nota" title="Criar nova nota">Nova Nota</button>
+                <button command="show-modal" commandFor="ModalMesagemRapida" class="mensagem-rapida" id="mensagem-rapida" title="Mensagem rápida">Mensagem Rápida</button>
             </div>
             <div class="chat-contatos" id="chat-contatos"></div>
         </aside>
@@ -125,6 +114,50 @@
     </main>
     <div class="container-golfinho"><img src="Imagens/golfinho.png" class="img-peixe"></div>
     <div class="agua-fish" id="agua-fish"></div>
+
+    <dialog id="ModalNota">
+        <div class="nav-bar-modal">
+            <h2>Criar Nova Nota</h2>
+            <button id="BtnFecharModal"><img scr="SVGs/close-SVG.svg"></button>
+        </div>
+        <template id="TemplateNota">
+            <input type="text" id="input-titulo" placeholder="Digite o título (opicional)">
+            <textarea id="input-nota" placeholder="Digite sua Nota"></textarea>
+        </template>
+        <div class="conatiner-btn-actions">
+            <button class="btn-confirmar" id="btn-confirmar">Confirmar</button>
+            <button class="btn-cancelar" id="btn-cancelar">Cancelar</button>
+        </div>
+    </dialog>
+
+    <dialog id="ModalContato">
+        <div class="nav-bar-modal">
+            <h2>Criar Contato</h2>
+            <button id="BtnFecharModal"><img scr="SVGs/close-SVG.svg"></button>
+        </div>
+        <template id="TemplateContato">
+            <input type="number" id="input-numero" placeholder="Número">
+            <input type="text" id="input-nome" placeholder="nome">
+            <label for="input-foto">Enviar foto</label>
+            <label for="input-foto">Enviar foto</label>
+        </template>
+        <div class="conatiner-btn-actions">
+            <button class="btn-confirmar" id="btn-confirmar">Confirmar</button>
+            <button class="btn-cancelar" id="btn-cancelar">Cancelar</button>
+        </div>
+    </dialog>
+
+    <dialog id="ModalMesagemRapida">
+        <div class="nav-bar-modal">
+            <h2>Mensagem Rápida</h2>
+            <button id="BtnFecharModal"><img scr="SVGs/close-SVG.svg"></button>
+        </div>
+        <template id="TemplateMensagemRapida">
+            <div class="lista-contatos" id="lista-contatos"></div>
+            <input type="text" id="input-mensagem" placeholder="Digite sua mensagem">
+        </template>
+    </dialog>
+
     <script src="script.js"></script>
 </body>
 
