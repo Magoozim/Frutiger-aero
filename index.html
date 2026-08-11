@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=overlays-content">
     <title>Nimbus - Seu espaço digital</title>
     <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/mobile_cascata.css"
 
     <link rel="icon" href="Imagens/LogoHead.png">
 </head>
@@ -91,15 +92,17 @@
             <header class="header-menu">
                 <button class="open-sidebar" id="OpenSidebar" title="Abrir barra lateral"><img
                         src="SVGs/menu-svgrepo-com - cópia.svg"></button>
-                <button command="show-modal" commandFor="ModalContato" class="add" id="add"><img src="SVGs/plus-svgrepo-com - cópia.svg"
-                        title="Adicionar contato"></button>
+                <button command="show-modal" commandFor="ModalContato" class="add" id="add"><img
+                        src="SVGs/plus-svgrepo-com - cópia.svg" title="Adicionar contato"></button>
             </header>
             <div class="input-area-pesquisar">
                 <input type="search" id="input-pesquisar" class="input-pesquisar" placeholder="Pesquisar Contato">
             </div>
             <div class="container-btn-sidebar-direita">
-                <button command="show-modal" commandFor="ModalNota" class="nova-nota" id="nova-nota" title="Criar nova nota">Nova Nota</button>
-                <button command="show-modal" commandFor="ModalMesagemRapida" class="mensagem-rapida" id="mensagem-rapida" title="Mensagem rápida">Mensagem Rápida</button>
+                <button command="show-modal" commandFor="ModalNota" class="nova-nota" id="nova-nota"
+                    title="Criar nova nota">Nova Nota</button>
+                <button command="show-modal" commandFor="ModalMesagemRapida" class="mensagem-rapida"
+                    id="mensagem-rapida" title="Mensagem rápida">Mensagem Rápida</button>
             </div>
             <div class="chat-contatos" id="chat-contatos"></div>
         </aside>
@@ -121,8 +124,10 @@
             <button id="BtnFecharModal"><img scr="SVGs/close-SVG.svg"></button>
         </div>
         <template id="TemplateNota">
-            <input type="text" id="input-titulo" placeholder="Digite o título (opicional)">
-            <textarea id="input-nota" placeholder="Digite sua Nota"></textarea>
+            <form id="FormNota">
+                <input type="text" id="input-titulo" placeholder="Digite o título (opicional)">
+                <textarea id="input-nota" placeholder="Digite sua Nota"></textarea>
+            </form>
         </template>
         <div class="conatiner-btn-actions">
             <button class="btn-confirmar" id="btn-confirmar">Confirmar</button>
@@ -136,10 +141,10 @@
             <button id="BtnFecharModal"><img scr="SVGs/close-SVG.svg"></button>
         </div>
         <template id="TemplateContato">
-            <input type="number" id="input-numero" placeholder="Número">
-            <input type="text" id="input-nome" placeholder="nome">
-            <label for="input-foto">Enviar foto</label>
-            <label for="input-foto">Enviar foto</label>
+            <form id="FormContato">
+                <input type="number" id="input-numero" placeholder="Número">
+                <input type="text" id="input-nome" placeholder="nome">
+            </form>
         </template>
         <div class="conatiner-btn-actions">
             <button class="btn-confirmar" id="btn-confirmar">Confirmar</button>
@@ -154,7 +159,9 @@
         </div>
         <template id="TemplateMensagemRapida">
             <div class="lista-contatos" id="lista-contatos"></div>
-            <input type="text" id="input-mensagem" placeholder="Digite sua mensagem">
+            <form id="FormMensagemRapida">
+                <input type="text" id="input-mensagem" placeholder="Digite sua mensagem">
+            </form>
         </template>
     </dialog>
 

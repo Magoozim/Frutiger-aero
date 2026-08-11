@@ -849,18 +849,6 @@ main {
     pointer-events: none;
 }
 
-.input-area {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    opacity: 0;
-    padding: 0 10px;
-    pointer-events: none;
-    transition: 0.3s ease;
-}
-
 .lista-contatos {
     height: 150px;
     width: 150px;
@@ -1036,7 +1024,7 @@ body.visualizar .view {
 }*/
 
 
-/*body.sidebar main {
+body.sidebar main {
     grid-template-columns: auto 1fr 220px;
 }
 
@@ -1052,7 +1040,7 @@ body.sidebar .input-area-pesquisar {
 
 body.sidebar .contato {
     opacity: 1;
-}*/
+}
 
 
 body.chat .add {
@@ -1101,49 +1089,6 @@ body.chat .container-nota {
 body.chat .chat-contatos {
     display: flex;
 }
-
-
-/*body.calendario .container-relogio {
-    transform: translate(-110%, 0);
-}
-
-body.calendario .container-calendario {
-    opacity: 1;
-    transform: translate(-100%, 0);
-}
-
-
-body.calendarioChat .container-relogio {
-    transform: translate(0, -110%);
-    opacity: 1;
-}
-
-body.calendarioChat .container-calendario {
-    transform: translate(0, -100%);
-    opacity: 1;
-}
-
-body.notaChat .container-relogio,
-body.notaChat .container-calendario {
-    transform: translate(0, -210%);
-    opacity: 1;
-}
-
-body.notaChat .container-nota {
-    transform: translate(0, -200%);
-    opacity: 1;
-}
-
-
-body.nota .container-relogio,
-body.nota .container-calendario {
-    transform: translate(-210%, 0);
-}
-
-body.nota .container-nota {
-    transform: translate(-200%, 0);
-    opacity: 1;
-}*/
 
 
 body.inputnota .input-area,

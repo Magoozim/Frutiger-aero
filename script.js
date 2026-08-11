@@ -2,6 +2,7 @@
 
 const DivWidgets = document.getElementById("widget-visualizações");
 const body = document.body;
+const OpenSidebar = document.getElementById("OpenSidebar");
 
 // funções
 
@@ -39,4 +40,8 @@ document.querySelectorAll(".nav-btn button").forEach((BtnNav) => {
             body.classList.remove("chat")
         }
     })
+});
+
+OpenSidebar.addEventListener("click", () => {
+    body.classList.toggle("sidebar")
 });
