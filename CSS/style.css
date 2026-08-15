@@ -118,7 +118,7 @@ body {
     inset: 0;
     width: 100%;
     height: 50%;
-    background: repeating-linear-gradient(90deg, transparent 0px, rgba(255,255,255,0.05), transparent 40px);
+    background: repeating-linear-gradient(90deg, transparent 0px, rgba(255, 255, 255, 0.05), transparent 40px);
     opacity: 0.6;
     pointer-events: none;
 }
@@ -193,7 +193,7 @@ header {
 
 }
 
-body:has(.chat) .nav-btn::before { /* <---- ainda pra resolver */
+html:has(.chat) .nav-btn::before {
     right: 10px;
 }
 
@@ -250,16 +250,16 @@ article {
 }
 
 .input {
-   background: var(--glass-bg);
-   border: 1px solid var(--glass-border);
-   width: 100%;
-   height: 45px;
-   line-height: 20px;
-   border-radius: 20px;
-   padding: 10px;
-   outline: none;
-   color: #eefcff;
-   text-shadow: 0 0 5px var(--green-main);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    width: 100%;
+    height: 45px;
+    line-height: 20px;
+    border-radius: 20px;
+    padding: 10px;
+    outline: none;
+    color: #eefcff;
+    text-shadow: 0 0 5px var(--green-main);
 }
 
 .input::placeholder {
@@ -328,6 +328,7 @@ article::before {
         opacity: 0;
         transform: translateX(110%);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -443,7 +444,7 @@ main {
 /* resto do código */
 
 .btn-musica {
-    display: none; 
+    display: none;
 }
 
 .container-relogio {
@@ -620,11 +621,12 @@ main {
     position: relative;
 }
 
-.container-notas span {
-    width: 100%;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    margin-bottom: 10px;
+.nota-texto {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     color: #eefcff;
 }
 
@@ -834,7 +836,7 @@ main {
     padding: 12px;
     width: 100%;
     border-radius: 20px;
-    position: relative;  
+    position: relative;
 }
 
 .btn-cancelar::before {
@@ -994,7 +996,17 @@ label:hover,
     }
 }
 
+#BtnFecharModal:hover {
+    filter: brightness(0.8);
+}
+
 /* Classes */
+
+.nota-texto.expandida {
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+}
+
 
 body.visualizar {
     backdrop-filter: none;
@@ -1019,11 +1031,6 @@ body.visualizar .view {
 }
 
 
-/*.nav-btn.btn-deslizante::before {
-    right: 10px;
-}*/
-
-
 body.sidebar main {
     grid-template-columns: auto 1fr 220px;
 }
@@ -1044,7 +1051,7 @@ body.sidebar .contato {
 
 
 body.chat .add {
-    display: block; 
+    display: block;
 }
 
 body.chat .input-area-pesquisar {
@@ -1081,7 +1088,7 @@ body.chat article {
     scale: 1;
     pointer-events: auto;
 }
- 
+
 body.chat .container-nota {
     transform: translate(0, -100%);
 }
@@ -1186,7 +1193,7 @@ body.EasterEgg-frutiger {
 
 
 body.EasterEgg-span #span-relogio {
-    opacity: 1; 
+    opacity: 1;
 }
 
 /* detalhes */
@@ -1199,8 +1206,86 @@ body.EasterEgg-span #span-relogio {
     border-radius: 0 0 20px 20px;
 }
 
-.notas:has(.container-notas) #sem-notas {
+#notas:has(.container-notas) #sem-notas {
     display: none;
+}
+
+/* modal */
+
+dialog {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 2rem;
+    min-width: 30vw;
+    gap: 1rem;
+    color: #eefcff;
+    border-radius: 20px;
+    position: relative;
+    margin: auto;
+    opacity: 1;
+    scale: 1;
+    transition: all 0.4s ease;
+}
+
+dialog::backdrop {
+    backdrop-filter: blur(10px) brightness(0.8) saturate(0.8);
+    transition: all 0.4s ease;
+}
+
+.nav-bar-modal {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+}
+
+dialog h2 {
+    font-size: 1.7rem;
+}
+
+.btn-fechar-modal img {
+    height: 40px;
+    width: 40px;
+}
+
+.btn-fechar-modal {
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+}
+
+dialog::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 70%;
+    left: 0;
+    top: 0;
+    border-radius: 20px;
+    background: var(--reflection);
+}
+
+@starting-style {
+    dialog[open] {
+        display: flex;
+        opacity: 0;
+        scale: 0.8;
+    }
+    dialog::backdrop {
+        backdrop-filter: blur(0) brightness(1) saturate(1);
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.conatiner-btn-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
 /* scroll */
