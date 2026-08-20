@@ -1,14 +1,38 @@
+
 // variáveis gerais
 
 const DivWidgets = document.getElementById("widget-visualizações");
 const body = document.body;
 const OpenSidebar = document.getElementById("OpenSidebar")
 const TemplateNota = document.getElementById("TemplateNota");
+const TemplateContato = document.getElementById("TemplateContato");
 const ModalNota = document.getElementById("ModalNota");
 const Notas = document.getElementById("notas");
 const InputTitulo = document.getElementById("input-titulo");
 const InputNota = document.getElementById("input-nota");
+
 const FormNota = document.getElementById("FormNota");
+const FormContato = document.getElementById("FormContato");
+const FormMensagemRapida = document.getElementById("FormMensagemRapida");
+
+const InputNumero = document.getElementById("input-numero");
+const InputNome = document.getElementById("input-nome");
+const AddContato = document.getElementById("add");
+const ChatContato = document.getElementById("chat-contatos");
+
+const ContainerMensagem = document.getElementById("container-mensagem")
+
+const InputMensagem = document.getElementById("input-mensagem");
+const InputMensagemChat = document.getElementById("input");
+const enviar = document.getElementById("enviar");
+
+const NomeContato = document.getElementById("nome-contato");
+const FotoPerfilContato = document.getElementById("foto-perfil-contato");
+
+// Arrays
+
+const contatos = []
+let ContatoAtual = null;
 
 // funções
 
@@ -39,7 +63,6 @@ function NovaNota() {
 
     const clone = TemplateNota.content.cloneNode(true);
 
-    const containerNota = clone.querySelector(".container-notas");
     const titulo = clone.querySelector("h2");
     const notaTexto = clone.querySelector(".nota-texto");
     const btnMais = clone.querySelector(".btn-mais");
@@ -68,6 +91,66 @@ function NovaNota() {
     Notas.appendChild(clone);
 }
 
+function CriarContato() {
+    let nome = InputNome.value.trim();
+    const numero = InputNumero.value.trim();
+
+    const contato = { nome, numero, mensagens: [] };
+    contatos.push(contato);
+
+    const clone = TemplateContato.content.cloneNode(true);
+
+    const Titulo = clone.querySelector("h4");
+    const item = clone.querySelector(".contato");
+
+    Titulo.textContent = nome || numero;
+
+    item.addEventListener("click", () => {
+        ContatoAtual = contato;
+        NomeContato.textContent = contato.nome;
+        FotoPerfilContato.src = "Imagens/Icon1.webp"
+        RenderizarMensagens();
+        body.classList.add("chat");
+    });
+
+    ChatContato.appendChild(clone);
+}
+
+function CriarBalao(texto) {
+    const Balao = document.createElement("div");
+    const p = document.createElement("p");
+
+    p.textContent = texto;
+
+    Balao.classList.add("balao");
+
+    Balao.appendChild(p);
+    ContainerMensagem.appendChild(Balao);
+}
+
+function Mensagem() {
+    const MensagemTexto = InputMensagemChat.value.trim();
+    const MensagemRapida = InputMensagem.value.trim();
+
+    const texto = MensagemTexto || MensagemRapida;
+
+    if (texto === "") return;
+
+    if (!ContatoAtual) {
+        alert("Não é possivel enviar mensagem sem contato. Clique em um dos contatos criados ou crie um")
+        return;
+    }
+
+    ContatoAtual.mensagens.push(texto);
+
+    CriarBalao(texto);
+}
+
+function RenderizarMensagens() {
+    ContainerMensagem.innerHTML = "";
+    ContatoAtual.mensagens.forEach(texto => CriarBalao(texto));
+}
+
 // rodar funções
 
 EhMobile();
@@ -78,19 +161,40 @@ setInterval(relogio, 1000);
 data();
 setInterval(data, 1000);
 
-FormNota.addEventListener("submit", () => {
-    NovaNota();
-    ModalNota.close();
-    FormNota.reset();
-    DivWidgets.dataset.widget = "nota"
-})
+[FormNota, FormContato, FormMensagemRapida].forEach((FormModal) => {
+    FormModal.addEventListener("submit", () => {
+        if (FormModal === FormNota) {
+            NovaNota();
+            ModalNota.close();
+            FormNota.reset();
+            DivWidgets.dataset.widget = "nota"
+        }
+        else if (FormModal === FormContato) {
+            CriarContato();
+            FormContato.reset();
+        }
+    });
+});
 
 InputNota.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-        e.preventDefault();
         NovaNota();
         ModalNota.close();
+        FormNota.reset();
         DivWidgets.dataset.widget = "nota"
+    }
+});
+
+enviar.addEventListener("click", () => {
+    Mensagem();
+    InputMensagemChat.value = "";
+});
+
+InputMensagemChat.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        e.preventDefault();
+        Mensagem();
+        InputMensagemChat.value = "";
     }
 });
 

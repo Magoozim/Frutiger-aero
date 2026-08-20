@@ -92,6 +92,7 @@
         </aside>
         <article>
             <header id="header-main" class="header-main">
+                <img id="foto-perfil-contato">
                 <h3 id="nome-contato"></h3>
             </header>
             <div class="mensagens" id="mensagens">
@@ -112,6 +113,12 @@
             <div class="input-area-pesquisar">
                 <input type="search" id="input-pesquisar" class="input-pesquisar" placeholder="Pesquisar Contato">
             </div>
+            <template id="TemplateContato">
+                <div class="contato">
+                    <img src="Imagens/Icon1.webp">
+                    <h4></h4>
+                </div>
+            </template>
             <div class="container-btn-sidebar-direita">
                 <button command="show-modal" commandFor="ModalNota" class="nova-nota" id="nova-nota"
                     title="Criar nova nota">Nova Nota</button>
@@ -159,7 +166,7 @@
             <button command="close" commandFor="ModalContato" id="BtnFecharModal" class="btn-fechar-modal"><img src="SVGs/close-SVG.svg"></button>
         </div>
         <form method="dialog" id="FormContato">
-            <input type="tel" id="input-numero" placeholder="Número" required>
+            <input type="tel" id="input-numero" placeholder="Número" required pattern="\(\d{2}\) \d{4,5}-\d{4}" title="Ex: (66) 12345-6789">
             <input type="text" id="input-nome" placeholder="nome">
         </form>
         <div class="conatiner-btn-actions">
