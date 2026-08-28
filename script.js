@@ -18,21 +18,27 @@ const FormMensagemRapida = document.getElementById("FormMensagemRapida");
 const InputNumero = document.getElementById("input-numero");
 const InputNome = document.getElementById("input-nome");
 const AddContato = document.getElementById("add");
+
 const ChatContato = document.getElementById("chat-contatos");
 
 const ContainerMensagem = document.getElementById("container-mensagem")
 
-const InputMensagem = document.getElementById("input-mensagem");
+const InputMensagem = document.getElementById("InputMensagemRapida");
 const InputMensagemChat = document.getElementById("input");
 const enviar = document.getElementById("enviar");
 
 const NomeContato = document.getElementById("nome-contato");
 const FotoPerfilContato = document.getElementById("foto-perfil-contato");
 
+const ContatosMensagemRapida = document.getElementById("ContatosMensagemRapida");
+const TemplateContatoRapido = document.getElementById("TemplateContatoRapido");
+
 // Arrays
 
 const contatos = []
 let ContatoAtual = null;
+
+let ContatoSelecionado = null;
 
 // funções
 
@@ -107,7 +113,7 @@ function CriarContato() {
 
     item.addEventListener("click", () => {
         ContatoAtual = contato;
-        NomeContato.textContent = contato.nome;
+        NomeContato.textContent = contato.nome || contato.numero;
         FotoPerfilContato.src = "Imagens/Icon1.webp"
         RenderizarMensagens();
         body.classList.add("chat");
@@ -151,6 +157,16 @@ function RenderizarMensagens() {
     ContatoAtual.mensagens.forEach(texto => CriarBalao(texto));
 }
 
+function MensagemRapida() {
+    const texto = InputMensagem.value.trim();
+
+    ContatoSelecionado.mensagens.push(texto);
+
+    if (ContatoSelecionado === ContatoAtual) {
+        CriarBalao(texto);
+    }
+}
+
 // rodar funções
 
 EhMobile();
@@ -172,6 +188,10 @@ setInterval(data, 1000);
         else if (FormModal === FormContato) {
             CriarContato();
             FormContato.reset();
+        }
+        else if (FormModal === FormMensagemRapida) {
+            MensagemRapida();
+            FormMensagemRapida.reset();
         }
     });
 });
@@ -228,4 +248,22 @@ document.querySelectorAll(".nav-btn button").forEach((BtnNav) => {
 
 OpenSidebar.addEventListener("click", () => {
     body.classList.toggle("sidebar")
+});
+
+document.getElementById("mensagem-rapida").addEventListener("click", () => {
+    ContatosMensagemRapida.innerHTML = "";
+
+    contatos.forEach(contato => {
+        const clone = TemplateContatoRapido.content.cloneNode(true);
+        const radio = clone.querySelector("input");
+        const nome = clone.querySelector("span");
+
+        nome.textContent = contato.nome || contato.numero;
+
+        radio.addEventListener("change", () => {
+            ContatoSelecionado = contato;
+        });
+
+        ContatosMensagemRapida.appendChild(clone);
+    });
 });
