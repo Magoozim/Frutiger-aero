@@ -88,6 +88,7 @@ body {
     color: #eefcff;
     font-family: "Segoe UI", sans-serif;
     transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 * {
@@ -212,8 +213,11 @@ html:has(.chat) .nav-btn::before {
 }
 
 .logo h1 {
-    color: #eefcff;
-    text-shadow: 0 0 5px #53c7ff, 0 0 10px #53c7ff;
+    color: transparent;
+    background: linear-gradient(135deg, #eefcff, var(--aqua-dark));
+    background-clip: text;
+    background-size: 200% auto;
+    -webkit-background-clip: text;
 }
 
 .view img {
@@ -293,6 +297,18 @@ article::before {
     display: flex;
     justify-content: start;
     gap: 0.3rem;
+}
+
+.contato-sair {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    box-shadow: 0 6px 5px var(--deep-ocean);
+}
+
+.contato-sair img {
+    height: 40px;
+    width: 40px;
 }
 
 .container-input {
@@ -431,9 +447,17 @@ main {
     transform: translateX(-100%);
     opacity: 1;
 }
+body.chat .widget-visualizações[data-widget="calendario"] .container-calendario {
+    transform: translateY(-100%);
+    opacity: 1;
+}
 
 .widget-visualizações[data-widget="calendario"] .container-relogio {
     transform: translateX(-110%);
+    opacity: 0;
+}
+body.chat .widget-visualizações[data-widget="calendario"] .container-relogio {
+    transform: translateY(-110%);
     opacity: 0;
 }
 
@@ -442,10 +466,19 @@ main {
     transform: translateX(-200%);
     opacity: 1;
 }
+body.chat .widget-visualizações[data-widget="nota"] .container-nota {
+    transform: translateY(-200%);
+    opacity: 1;
+}
 
 .widget-visualizações[data-widget="nota"] .container-calendario,
 .widget-visualizações[data-widget="nota"] .container-relogio {
     transform: translateX(-210%);
+    opacity: 0;
+}
+body.chat .widget-visualizações[data-widget="nota"] .container-calendario,
+body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
+    transform: translateY(-210%);
     opacity: 0;
 }
 
@@ -1089,43 +1122,59 @@ body.chat .chat-contatos {
 }
 
 
-body.inputnota .input-area,
-body.inputcontato .input-area,
-body.inputmensagemrapida .input-area {
-    opacity: 1;
-    pointer-events: auto;
-    display: flex;
-}
-
-body.inputnota #input-mensagem,
-body.inputnota #input-numero,
-body.inputnota #input-nome,
-body.inputnota #lista-contatos,
-body.inputnota #input-foto,
-body.inputnota label {
-    display: none;
-}
-
-
-body.inputcontato #input-nota,
-body.inputcontato #input-mensagem,
-body.inputcontato #lista-contatos,
-body.inputcontato #input-foto,
-body.inputcontato #input-titulo {
-    display: none;
-}
-
-body.inputmensagemrapida #input-nota,
-body.inputmensagemrapida #input-foto,
-body.inputmensagemrapida #input-nome,
-body.inputmensagemrapida #input-numero,
-body.inputmensagemrapida label,
-body.inputmensagemrapida #input-titulo {
-    display: none;
-}
-
 body.SelecionarContato .item {
     box-shadow: 0 0 10px var(--light-white);
+}
+
+
+.campo-invalido {
+    border-color: rgba(255, 150, 150, 0.85) !important;
+    box-shadow: 0 0 0 2px rgba(255, 150, 150, 0.3);
+}
+
+.aviso-erro {
+    display: block;
+    margin-top: 6px;
+    padding: 15px 14px;
+    font-size: 0.9em;
+    color: #eefcff;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    position: relative;
+    opacity: 1;
+    scale: 1;
+    transition: all 1s;
+}
+
+.aviso-erro::after {
+    content: "";
+    position: absolute;
+    width: 10%;
+    height: 20px;
+    bottom: 47.5px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    clip-path: polygon(100% 50%, 0 0, 0 100%);
+}
+
+.aviso-erro::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    background: var(--reflection);
+    filter: blur(1px);
+    top: 0;
+    left: 0;
+}
+
+@starting-style {
+    .aviso-erro {
+        opacity: 0.3;
+        scale: 0.8;
+    }
 }
 
 /* Classes de easter eggs */
@@ -1207,6 +1256,10 @@ body.EasterEgg-span #span-relogio {
 
 #notas:has(.container-notas) #sem-notas {
     display: none;
+}
+
+body:not(:has(.contato)) .contato-sair {
+    display: none; /* resolver */
 }
 
 /* modal */

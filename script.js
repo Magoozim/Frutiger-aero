@@ -33,6 +33,8 @@ const FotoPerfilContato = document.getElementById("foto-perfil-contato");
 const ContatosMensagemRapida = document.getElementById("ContatosMensagemRapida");
 const TemplateContatoRapido = document.getElementById("TemplateContatoRapido");
 
+const View = document.getElementById("view");
+
 // Arrays
 
 const contatos = []
@@ -74,6 +76,8 @@ function NovaNota() {
     const btnMais = clone.querySelector(".btn-mais");
     const btnEditar = clone.querySelector(".btn-editar");
     const btnExcluir = clone.querySelector(".btn-excluir");
+    const containerNota = clone.querySelector("container-notas");
+
 
     titulo.textContent = valortitulo || "Sem Título";
     notaTexto.textContent = valor;
@@ -266,4 +270,46 @@ document.getElementById("mensagem-rapida").addEventListener("click", () => {
 
         ContatosMensagemRapida.appendChild(clone);
     });
+});
+
+View.addEventListener("click", () => {
+    body.classList.toggle("visualizar");
+    if (body.classList.contains("visualizar")) {
+        body.appendChild(View);
+    }
+    else {
+        setTimeout(() => {
+            document.querySelector(".header-body").appendChild(View);
+        }, 400);
+    }
+});
+
+document.addEventListener("invalid", (e) => {
+    e.preventDefault();
+
+    const campo = e.target;
+    campo.classList.add("campo-invalido");
+
+    let aviso = campo.nextElementSibling;
+    if (!aviso || !aviso.classList.contains("aviso-erro")) {
+        aviso = document.createElement("span");
+        aviso.className = "aviso-erro";
+        campo.after(aviso);
+    }
+    aviso.textContent = campo.validationMessage;
+}, true);
+
+document.addEventListener("input", (e) => {
+    e.target.classList.remove("campo-invalido");
+    const aviso = e.target.nextElementSibling;
+    if (aviso && aviso.classList.contains("aviso-erro")) {
+        aviso.remove();
+    }
+}, true);
+
+InputNota.addEventListener("invalid", () => {
+    InputNota.setCustomValidity("Preencha este campo");
+});
+InputNota.addEventListener("input", () => {
+    InputNota.setCustomValidity("");
 });
