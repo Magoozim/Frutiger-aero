@@ -753,6 +753,40 @@ body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
     gap: 10px;
 }
 
+#dropdown {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 1rem;
+    border-radius: 20px;
+    flex-direction: column;
+    box-shadow: 2px 6px 8px var(--deep-ocean);
+    opacity: 1;
+    backdrop-filter: blur(3px);
+    transition: all 0.4s ease;
+
+    position: fixed;
+    inset: unset;
+    right: 0;
+    top: 20%;
+}
+
+#dropdown button {
+    padding: 0.3rem;
+    text-shadow: 0 0 5px var(--deep-ocean);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    width: 100%;
+    border-radius: 20px;
+    margin: 0.4rem 0 0;
+}
+
+@starting-style {
+    #dropdown:popover-open {
+        top: 15%;
+        opacity: 0;
+    }
+}
+
 .chat-contatos {
     display: none;
 }
@@ -1020,8 +1054,14 @@ input:hover,
     transition: all 0.4s ease;
 }
 
-.lista-contatos:has(.contato-rapido:hover) input {
+.lista-contatos:has(.contato-rapido:hover) input,
+.lista-contatos:has(.contato-grupo:hover) input {
     box-shadow: none;
+}
+
+#dropdowm button:hover {
+    box-shadow: 0 0 8px var(--light-soft);
+    scale: 1.1;
 }
 
 /* Classes */
@@ -1351,7 +1391,6 @@ form {
     position: relative;
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
 }
 
 .lista-contatos label {

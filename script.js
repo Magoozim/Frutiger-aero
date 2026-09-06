@@ -35,12 +35,21 @@ const TemplateContatoRapido = document.getElementById("TemplateContatoRapido");
 
 const View = document.getElementById("view");
 
+const ModalGrupo = document.getElementById("ModalGrupo");
+const FormGrupo = document.getElementById("FormGrupo");
+const InputNomeGrupo = document.getElementById("input-grupo");
+const ContatosGrupo = document.getElementById("ContatosGrupo");
+const TemplateGrupo = document.getElementById("TemplateGrupo");
+const BtnCriarGrupo = document.getElementById("BtnCriarGrupo");
+
 // Arrays
 
 const contatos = []
 let ContatoAtual = null;
 
 let ContatoSelecionado = null;
+
+let membrosSelecionados = [];
 
 // funções
 
@@ -112,8 +121,10 @@ function CriarContato() {
 
     const Titulo = clone.querySelector("h4");
     const item = clone.querySelector(".contato");
+    const Foto = clone.querySelector("#FotoDePerfil");
 
     Titulo.textContent = nome || numero;
+    Foto.src = "Imagens/Icon1.webp";
 
     item.addEventListener("click", () => {
         ContatoAtual = contato;
@@ -171,6 +182,40 @@ function MensagemRapida() {
     }
 }
 
+function AtualizarValidadeGrupo() {
+    const checkboxes = FormGrupo.querySelectorAll('input[type="checkbox"]');
+    if (checkboxes.length === 0) return;
+
+    const algumMarcado = membrosSelecionados.length > 0;
+    checkboxes[0].setCustomValidity(algumMarcado ? "" : "Selecione pelo menos um contato");
+}
+
+function CriarGrupo() {
+    const nome = InputNomeGrupo.value.trim();
+
+    const grupo = { nome, membros: [...membrosSelecionados], mensagens: [] };
+    contatos.push(grupo);
+
+    const clone = TemplateContato.content.cloneNode(true);
+    const titulo = clone.querySelector("h4");
+    const Foto = clone.querySelector("#FotoDePerfil");
+    const item = clone.querySelector(".contato");
+
+    titulo.textContent = grupo.nome;
+    Foto.src = "Windows 7 Icons/397.png";
+    item.classList.add("grupo");
+
+    item.addEventListener("click", () => {
+        ContatoAtual = grupo;
+        NomeContato.textContent = grupo.nome;
+        FotoPerfilContato.src = "Windows 7 Icons/397.png";
+        RenderizarMensagens();
+        body.classList.add("chat");
+    });
+
+    ChatContato.appendChild(clone);
+}
+
 // rodar funções
 
 EhMobile();
@@ -181,7 +226,7 @@ setInterval(relogio, 1000);
 data();
 setInterval(data, 1000);
 
-[FormNota, FormContato, FormMensagemRapida].forEach((FormModal) => {
+[FormNota, FormContato, FormMensagemRapida, FormGrupo].forEach((FormModal) => {
     FormModal.addEventListener("submit", () => {
         if (FormModal === FormNota) {
             NovaNota();
@@ -196,6 +241,10 @@ setInterval(data, 1000);
         else if (FormModal === FormMensagemRapida) {
             MensagemRapida();
             FormMensagemRapida.reset();
+        }
+        else if (FormModal === FormGrupo) {
+            CriarGrupo();
+            FormGrupo.reset();
         }
     });
 });
@@ -312,4 +361,33 @@ InputNota.addEventListener("invalid", () => {
 });
 InputNota.addEventListener("input", () => {
     InputNota.setCustomValidity("");
+});
+
+
+BtnCriarGrupo.addEventListener("click", () => {
+    ContatosGrupo.innerHTML = "";
+    membrosSelecionados = [];
+
+    contatos.forEach(contato => {
+        if (contato.membros) return;
+
+        const clone = TemplateGrupo.content.cloneNode(true);
+        const checkbox = clone.querySelector("input");
+        const nome = clone.querySelector("span");
+
+        nome.textContent = contato.nome || contato.numero;
+
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                membrosSelecionados.push(contato);
+            } else {
+                membrosSelecionados = membrosSelecionados.filter(c => c !== contato);
+            }
+            AtualizarValidadeGrupo();
+        });
+
+        ContatosGrupo.appendChild(clone);
+    });
+
+    AtualizarValidadeGrupo();
 });

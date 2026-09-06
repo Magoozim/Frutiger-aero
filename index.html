@@ -108,15 +108,19 @@
             <header class="header-menu">
                 <button class="open-sidebar" id="OpenSidebar" title="Abrir barra lateral"><img
                         src="SVGs/menu-svgrepo-com - cópia.svg"></button>
-                <button command="show-modal" commandFor="ModalContato" class="add" id="add"><img
+                <button popovertarget="dropdown" class="add" id="add"><img
                         src="SVGs/plus-svgrepo-com - cópia.svg" title="Adicionar contato"></button>
+                <div popover id="dropdown">
+                    <button command="show-modal" commandFor="ModalContato" id="BtnAdicionarContato">Adicionar Contato</button>
+                    <button command="show-modal" commandFor="ModalGrupo" id="BtnCriarGrupo">Criar Grupo</button>
+                </div>
             </header>
             <div class="input-area-pesquisar">
                 <input type="search" id="input-pesquisar" class="input-pesquisar" placeholder="Pesquisar Contato">
             </div>
             <template id="TemplateContato">
                 <div class="contato">
-                    <img src="Imagens/Icon1.webp">
+                    <img id="FotoDePerfil">
                     <h4></h4>
                 </div>
             </template>
@@ -126,12 +130,6 @@
                 <button command="show-modal" commandFor="ModalMensagemRapida" class="mensagem-rapida"
                     id="mensagem-rapida" title="Mensagem rápida">Mensagem Rápida</button>
             </div>
-            <template id="TemplateContato">
-                <div class="contato">
-                    <img src="Imagens/Icon1.webp">
-                    <h3></h3>
-                </div>
-            </template>
             <div class="chat-contatos" id="chat-contatos"></div>
         </aside>
         <div id="audios" class="audios">
@@ -149,7 +147,7 @@
     <dialog id="ModalNota">
         <div class="nav-bar-modal">
             <h2>Criar Nova Nota</h2>
-            <button command="close" commandFor="ModalNota" id="BtnFecharModal" class="btn-fechar-modal"><img
+            <button command="close" commandFor="ModalNota" class="btn-fechar-modal"><img
                     src="SVGs/close-SVG.svg"></button>
         </div>
         <form method="dialog" id="FormNota">
@@ -157,15 +155,15 @@
             <textarea id="input-nota" placeholder="Digite sua Nota" required></textarea>
         </form>
         <div class="conatiner-btn-actions">
-            <button type="submit" form="FormNota" class="btn-confirmar" id="btn-confirmar">Confirmar</button>
-            <button command="close" commandFor="ModalNota" class="btn-cancelar" id="btn-cancelar">Cancelar</button>
+            <button type="submit" form="FormNota" class="btn-confirmar" >Criar Nota</button>
+            <button command="close" commandFor="ModalNota" class="btn-cancelar">Cancelar</button>
         </div>
     </dialog>
 
     <dialog id="ModalContato">
         <div class="nav-bar-modal">
             <h2>Criar Contato</h2>
-            <button command="close" commandFor="ModalContato" id="BtnFecharModal" class="btn-fechar-modal"><img
+            <button command="close" commandFor="ModalContato" class="btn-fechar-modal"><img
                     src="SVGs/close-SVG.svg"></button>
         </div>
         <form method="dialog" id="FormContato">
@@ -174,15 +172,15 @@
             <input type="text" id="input-nome" placeholder="nome">
         </form>
         <div class="conatiner-btn-actions">
-            <button type="submit" form="FormContato" class="btn-confirmar" id="btn-confirmar">Confirmar</button>
-            <button command="close" commandFor="ModalContato" class="btn-cancelar" id="btn-cancelar">Cancelar</button>
+            <button type="submit" form="FormContato" class="btn-confirmar" >Adicionar</button>
+            <button command="close" commandFor="ModalContato" class="btn-cancelar">Cancelar</button>
         </div>
     </dialog>
 
     <dialog id="ModalMensagemRapida">
         <div class="nav-bar-modal">
             <h2>Mensagem Rápida</h2>
-            <button command="close" commandFor="ModalMensagemRapida" id="BtnFecharModal" class="btn-fechar-modal"><img
+            <button command="close" commandFor="ModalMensagemRapida" class="btn-fechar-modal"><img
                     src="SVGs/close-SVG.svg"></button>
         </div>
         <template id="TemplateContatoRapido">
@@ -191,14 +189,36 @@
                 <span></span>
             </label>
         </template>
-        <div class="lista-contatos" id="ContatosMensagemRapida"></div>
         <form method="dialog" id="FormMensagemRapida">
             <input type="text" id="InputMensagemRapida" placeholder="Digite sua mensagem" required>
+            <div class="lista-contatos" id="ContatosMensagemRapida"></div>
         </form>
         <div class="conatiner-btn-actions">
-            <button type="submit" form="FormMensagemRapida" class="btn-confirmar" id="btn-confirmar">Confirmar</button>
+            <button type="submit" form="FormMensagemRapida" class="btn-confirmar" >Enviar</button>
             <button command="close" commandFor="ModalMensagemRapida" class="btn-cancelar"
-                id="btn-cancelar">Cancelar</button>
+            >Cancelar</button>
+        </div>
+    </dialog>
+
+    <dialog id="ModalGrupo">
+        <div class="nav-bar-modal">
+            <h2>Criar Contato</h2>
+            <button command="close" commandFor="ModalGrupo" class="btn-fechar-modal"><img
+                    src="SVGs/close-SVG.svg"></button>
+        </div>
+        <template id="TemplateGrupo">
+            <label class="contato-grupo">
+                <input type="checkbox" name="membro-selecionado" form="FormGrupo">
+                <span></span>
+            </label>
+        </template>
+        <form method="dialog" id="FormGrupo">
+            <input type="text" id="input-grupo" placeholder="Nome do Grupo" required>
+            <div class="lista-contatos" id="ContatosGrupo"></div>
+        </form>
+        <div class="conatiner-btn-actions">
+            <button type="submit" form="FormGrupo" class="btn-confirmar" >Criar Grupo</button>
+            <button command="close" commandFor="ModalGrupo" class="btn-cancelar">Cancelar</button>
         </div>
     </dialog>
 
