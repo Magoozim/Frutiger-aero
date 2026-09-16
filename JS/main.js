@@ -1,13 +1,14 @@
+import { EasterEggsNotas } from "./EasterEgg.js";
 
 // variáveis gerais
 
 const DivWidgets = document.getElementById("widget-visualizações");
-const body = document.body;
+export const body = document.body;
 const OpenSidebar = document.getElementById("OpenSidebar")
 const TemplateNota = document.getElementById("TemplateNota");
 const TemplateContato = document.getElementById("TemplateContato");
 const ModalNota = document.getElementById("ModalNota");
-const Notas = document.getElementById("notas");
+export const Notas = document.getElementById("notas");
 const InputTitulo = document.getElementById("input-titulo");
 const InputNota = document.getElementById("input-nota");
 
@@ -17,7 +18,6 @@ const FormMensagemRapida = document.getElementById("FormMensagemRapida");
 
 const InputNumero = document.getElementById("input-numero");
 const InputNome = document.getElementById("input-nome");
-const AddContato = document.getElementById("add");
 
 const ChatContato = document.getElementById("chat-contatos");
 
@@ -41,6 +41,10 @@ const InputNomeGrupo = document.getElementById("input-grupo");
 const ContatosGrupo = document.getElementById("ContatosGrupo");
 const TemplateGrupo = document.getElementById("TemplateGrupo");
 const BtnCriarGrupo = document.getElementById("BtnCriarGrupo");
+
+const InputPesquisar = document.getElementById("input-pesquisar");
+
+const Title = document.getElementById("Title");
 
 // Arrays
 
@@ -85,7 +89,7 @@ function NovaNota() {
     const btnMais = clone.querySelector(".btn-mais");
     const btnEditar = clone.querySelector(".btn-editar");
     const btnExcluir = clone.querySelector(".btn-excluir");
-    const containerNota = clone.querySelector("container-notas");
+    const containerNota = clone.querySelector(".container-notas");
 
 
     titulo.textContent = valortitulo || "Sem Título";
@@ -106,6 +110,8 @@ function NovaNota() {
         containerNota.remove();
         ModalNota.showModal();
     });
+
+    EasterEggsNotas(valor, notaTexto, containerNota);
 
     Notas.appendChild(clone);
 }
@@ -130,6 +136,9 @@ function CriarContato() {
         ContatoAtual = contato;
         NomeContato.textContent = contato.nome || contato.numero;
         FotoPerfilContato.src = "Imagens/Icon1.webp"
+        FotoPerfilContato.style.display = "block";
+        document.querySelector(".chat-apresentacao").style.display = "none";
+        document.querySelector(".comeco-conversa").style.display = "flex";
         RenderizarMensagens();
         body.classList.add("chat");
     });
@@ -209,6 +218,9 @@ function CriarGrupo() {
         ContatoAtual = grupo;
         NomeContato.textContent = grupo.nome;
         FotoPerfilContato.src = "Windows 7 Icons/397.png";
+        FotoPerfilContato.style.display = "block";
+        document.querySelector(".chat-apresentacao").style.display = "none";
+        document.querySelector(".comeco-conversa").style.display = "flex";
         RenderizarMensagens();
         body.classList.add("chat");
     });
@@ -273,6 +285,8 @@ InputMensagemChat.addEventListener("keydown", (e) => {
 
 // código
 
+// Trocar de widgets
+
 document.querySelectorAll(".header-widget button").forEach((BtnWidget) => {
     BtnWidget.addEventListener("click", () => {
 
@@ -288,6 +302,8 @@ document.querySelectorAll(".header-widget button").forEach((BtnWidget) => {
     })
 });
 
+// Botões das abas
+
 document.querySelectorAll(".nav-btn button").forEach((BtnNav) => {
     BtnNav.addEventListener("click", () => {
         if (BtnNav.classList.contains("btn-mensagens")) {
@@ -299,12 +315,16 @@ document.querySelectorAll(".nav-btn button").forEach((BtnNav) => {
     })
 });
 
+// Abrir sidebar
+
 OpenSidebar.addEventListener("click", () => {
     body.classList.toggle("sidebar")
 });
 
+// Mensagem rápida
+
 document.getElementById("mensagem-rapida").addEventListener("click", () => {
-    ContatosMensagemRapida.innerHTML = "";
+    ContatosMensagemRapida.querySelectorAll("contato-rapido").forEach(el => el.remove());
 
     contatos.forEach(contato => {
         const clone = TemplateContatoRapido.content.cloneNode(true);
@@ -321,6 +341,8 @@ document.getElementById("mensagem-rapida").addEventListener("click", () => {
     });
 });
 
+// Visualizar wallpaper
+
 View.addEventListener("click", () => {
     body.classList.toggle("visualizar");
     if (body.classList.contains("visualizar")) {
@@ -332,6 +354,8 @@ View.addEventListener("click", () => {
         }, 400);
     }
 });
+
+// Bãlão de erro personalizado
 
 document.addEventListener("invalid", (e) => {
     e.preventDefault();
@@ -359,13 +383,15 @@ document.addEventListener("input", (e) => {
 InputNota.addEventListener("invalid", () => {
     InputNota.setCustomValidity("Preencha este campo");
 });
+
 InputNota.addEventListener("input", () => {
     InputNota.setCustomValidity("");
 });
 
+// Criar grupo
 
 BtnCriarGrupo.addEventListener("click", () => {
-    ContatosGrupo.innerHTML = "";
+    ContatosGrupo.querySelectorAll("contato-grupo").forEach(el => el.remove());
     membrosSelecionados = [];
 
     contatos.forEach(contato => {
@@ -390,4 +416,44 @@ BtnCriarGrupo.addEventListener("click", () => {
     });
 
     AtualizarValidadeGrupo();
+});
+
+// sair do contato
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        ContatoAtual = null
+        NomeContato.textContent = ""
+        ContainerMensagem.innerHTML = ""
+        FotoPerfilContato.src = ""
+    }
+});
+
+document.getElementById("ContatoSair").addEventListener("click", () => {
+    ContatoAtual = null;
+    NomeContato.textContent = "";
+    ContainerMensagem.innerHTML = "";
+    FotoPerfilContato.style.display = "none";
+    document.querySelector(".chat-apresentacao").style.display = "flex";
+    document.querySelector(".comeco-conversa").style.display = "none";
+})
+
+// Filtrar pesquisa
+
+InputPesquisar.addEventListener("input", (e) => {
+    const termo = e.target.value.toLowerCase();
+    document.querySelectorAll(".contato").forEach(contato => {
+        const nome = contato.querySelector("h4").textContent.toLowerCase();
+        contato.style.display = nome.includes(termo)
+            ? "flex"
+            : "none";
+    });
+});
+
+// Aviso de música
+
+document.querySelectorAll(".container-musica button").forEach((BtnMusica) => {
+    BtnMusica.addEventListener("click", () => {
+        body.classList.toggle("SpanMusica");
+    });
 });

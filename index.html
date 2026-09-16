@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="CSS/mobile_cascata.css">
     <link rel="icon" href="Imagens/Logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -83,6 +86,7 @@
                 </div>
                 <div class="container-musica" id="container-musica">
                     <img src="Windows 7 Icons/517.png" class="musica-icone">
+                    <span id="sem-musica">Hmmm, infelizmente não dá para tocar músicas por enquanto, sinto muito :(</span>
                     <div class="musica-btn">
                         <button><img src="Windows 7 Icons/469.png"></button>
                         <button class="pause" id="BtnPause"><img src="Windows 7 Icons/472.png"></button>
@@ -97,6 +101,15 @@
                 <h3 id="nome-contato"></h3>
             </header>
             <div class="mensagens" id="mensagens">
+                <div class="comeco-conversa">
+                    <h2>Aqui é onde começou a conversa</h2>
+                </div>
+                <div class="chat-apresentacao">
+                    <img src="Imagens/LogoHeader.png">
+                    <h3>Nimbus</h3>
+                    <p>Bem Vindo a Mensagens! Um Chat para você conversar com seus amigos, adicionando criando contatos
+                        e até Grupos!</p>
+                </div>
                 <div class="container-mensagem" id="container-mensagem"></div>
             </div>
             <div class="container-input">
@@ -108,13 +121,17 @@
             <header class="header-menu">
                 <button class="open-sidebar" id="OpenSidebar" title="Abrir barra lateral"><img
                         src="SVGs/menu-svgrepo-com - cópia.svg"></button>
-                <button popovertarget="dropdown" class="add" id="add"><img
-                        src="SVGs/plus-svgrepo-com - cópia.svg" title="Adicionar contato"></button>
+                <button popovertarget="dropdown" class="add" id="add"><img src="SVGs/plus-svgrepo-com - cópia.svg"
+                        title="Adicionar contato"></button>
                 <div popover id="dropdown">
-                    <button command="show-modal" commandFor="ModalContato" id="BtnAdicionarContato">Adicionar Contato</button>
+                    <button command="show-modal" commandFor="ModalContato" id="BtnAdicionarContato">Adicionar
+                        Contato</button>
                     <button command="show-modal" commandFor="ModalGrupo" id="BtnCriarGrupo">Criar Grupo</button>
                 </div>
             </header>
+            <div class="title-contatos">
+                <h2>Contatos</h2>
+            </div>
             <div class="input-area-pesquisar">
                 <input type="search" id="input-pesquisar" class="input-pesquisar" placeholder="Pesquisar Contato">
             </div>
@@ -130,7 +147,8 @@
                 <button command="show-modal" commandFor="ModalMensagemRapida" class="mensagem-rapida"
                     id="mensagem-rapida" title="Mensagem rápida">Mensagem Rápida</button>
             </div>
-            <div class="chat-contatos" id="chat-contatos"></div>
+            <div class="chat-contatos" id="chat-contatos"><span id="sem-contatos">Sem nenhum contato até agora :(</span>
+            </div>
         </aside>
         <div id="audios" class="audios">
             <audio id="windows-7" src="sons/windows-7-startup.mp3"></audio>
@@ -155,7 +173,7 @@
             <textarea id="input-nota" placeholder="Digite sua Nota" required></textarea>
         </form>
         <div class="conatiner-btn-actions">
-            <button type="submit" form="FormNota" class="btn-confirmar" >Criar Nota</button>
+            <button type="submit" form="FormNota" class="btn-confirmar">Criar Nota</button>
             <button command="close" commandFor="ModalNota" class="btn-cancelar">Cancelar</button>
         </div>
     </dialog>
@@ -172,7 +190,7 @@
             <input type="text" id="input-nome" placeholder="nome">
         </form>
         <div class="conatiner-btn-actions">
-            <button type="submit" form="FormContato" class="btn-confirmar" >Adicionar</button>
+            <button type="submit" form="FormContato" class="btn-confirmar">Adicionar</button>
             <button command="close" commandFor="ModalContato" class="btn-cancelar">Cancelar</button>
         </div>
     </dialog>
@@ -191,12 +209,12 @@
         </template>
         <form method="dialog" id="FormMensagemRapida">
             <input type="text" id="InputMensagemRapida" placeholder="Digite sua mensagem" required>
-            <div class="lista-contatos" id="ContatosMensagemRapida"></div>
+            <div class="lista-contatos" id="ContatosMensagemRapida"><span class="sem-contato">Sem Contatos por
+                    enquanto :(</span></div>
         </form>
         <div class="conatiner-btn-actions">
-            <button type="submit" form="FormMensagemRapida" class="btn-confirmar" >Enviar</button>
-            <button command="close" commandFor="ModalMensagemRapida" class="btn-cancelar"
-            >Cancelar</button>
+            <button type="submit" form="FormMensagemRapida" class="btn-confirmar">Enviar</button>
+            <button command="close" commandFor="ModalMensagemRapida" class="btn-cancelar">Cancelar</button>
         </div>
     </dialog>
 
@@ -214,15 +232,17 @@
         </template>
         <form method="dialog" id="FormGrupo">
             <input type="text" id="input-grupo" placeholder="Nome do Grupo" required>
-            <div class="lista-contatos" id="ContatosGrupo"></div>
+            <div class="lista-contatos" id="ContatosGrupo"><span class="sem-contato">Sem Contatos por enquanto :(</span>
+            </div>
         </form>
         <div class="conatiner-btn-actions">
-            <button type="submit" form="FormGrupo" class="btn-confirmar" >Criar Grupo</button>
+            <button type="submit" form="FormGrupo" class="btn-confirmar">Criar Grupo</button>
             <button command="close" commandFor="ModalGrupo" class="btn-cancelar">Cancelar</button>
         </div>
     </dialog>
 
-    <script src="script.js"></script>
+    <script type="module" src="JS/main.js"></script>
+    <script type="module" src="JS/EasterEgg.js"></script>
 </body>
 
 </html>

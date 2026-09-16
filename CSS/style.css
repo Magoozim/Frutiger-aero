@@ -86,7 +86,7 @@ body {
     backdrop-filter: blur(1px);
     gap: 10px;
     color: #eefcff;
-    font-family: "Segoe UI", sans-serif;
+    font-family: "Outfit", sans-serif;
     transition: all 0.3s ease;
     -webkit-tap-highlight-color: transparent;
 }
@@ -279,6 +279,7 @@ article::before {
     height: 50%;
     border-radius: 20px;
     background: var(--reflection);
+    pointer-events: none;
 }
 
 #foto-perfil-contato {
@@ -304,6 +305,7 @@ article::before {
     border: 1px solid var(--glass-border);
     border-radius: 999px;
     box-shadow: 0 6px 5px var(--deep-ocean);
+    pointer-events: auto;
 }
 
 .contato-sair img {
@@ -338,6 +340,7 @@ article::before {
     align-items: end;
     padding: 10px;
     overflow-y: auto;
+    gap: 10px;
 }
 
 .container-mensagem {
@@ -362,7 +365,7 @@ article::before {
 .balao {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    max-width: 250px;
+    max-width: 500px;
     width: fit-content;
     border-radius: 20px;
     padding: 0 10px;
@@ -387,6 +390,46 @@ main {
     grid-template-columns: auto 1fr 50px;
     grid-template-areas:
         "sidebarE mensagens sidebarD";
+}
+
+.chat-apresentacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    filter: saturate(0.7);
+}
+
+.chat-apresentacao img {
+    height: 200px;
+}
+
+.chat-apresentacao h3 {
+    font-size: 2rem;
+    text-shadow: 0 0 5px var(--deep-ocean), 0 0 10px var(--aqua-dark);
+}
+
+.chat-apresentacao p {
+    text-shadow: 0 0 5px var(--deep-ocean), 0 0 10px var(--aqua-dark);
+}
+
+@keyframes ApresentaçãoChat {
+    from {
+        scale: 0.9;
+    }
+
+    to {
+        scale: 1;
+    }
+}
+
+.comeco-conversa {
+    display: none;
+    justify-content: center;
+    border-bottom: 1px solid var(--glass-border);
+    width: 100%;
 }
 
 /* barra lateral esquerda */
@@ -447,6 +490,7 @@ main {
     transform: translateX(-100%);
     opacity: 1;
 }
+
 body.chat .widget-visualizações[data-widget="calendario"] .container-calendario {
     transform: translateY(-100%);
     opacity: 1;
@@ -456,6 +500,7 @@ body.chat .widget-visualizações[data-widget="calendario"] .container-calendari
     transform: translateX(-110%);
     opacity: 0;
 }
+
 body.chat .widget-visualizações[data-widget="calendario"] .container-relogio {
     transform: translateY(-110%);
     opacity: 0;
@@ -466,6 +511,7 @@ body.chat .widget-visualizações[data-widget="calendario"] .container-relogio {
     transform: translateX(-200%);
     opacity: 1;
 }
+
 body.chat .widget-visualizações[data-widget="nota"] .container-nota {
     transform: translateY(-200%);
     opacity: 1;
@@ -476,6 +522,7 @@ body.chat .widget-visualizações[data-widget="nota"] .container-nota {
     transform: translateX(-210%);
     opacity: 0;
 }
+
 body.chat .widget-visualizações[data-widget="nota"] .container-calendario,
 body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
     transform: translateY(-210%);
@@ -651,6 +698,13 @@ body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
     display: none;
 }
 
+#sem-musica {
+    display: none;
+    transition: all 0.5s ease;
+    opacity: 1;
+    scale: 1;
+}
+
 .container-notas {
     background: var(--glass-bg);
     width: 100%;
@@ -742,7 +796,6 @@ body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
     grid-area: sidebarD;
     background-color: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
     border-radius: 20px;
     position: relative;
     transition: all 0.4s ease;
@@ -813,6 +866,16 @@ body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
     position: relative;
 }
 
+.title-contatos {
+    display: none;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.title-contatos h2 {
+    text-shadow: 0 0 10px var(--deep-ocean), 0 0 5px var(--aqua-dark);
+}
+
 .input-area-pesquisar {
     opacity: 0;
     display: none;
@@ -826,7 +889,7 @@ body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
 .add {
     opacity: 0;
     transition: all 0.4s ease;
-    display: none;
+    pointer-events: none;
 }
 
 .container-btn-sidebar-direita {
@@ -847,13 +910,14 @@ body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: 20px;
-    width: 11vw;
+    width: 70%;
     height: 5vh;
     backdrop-filter: blur(10px);
     position: relative;
     opacity: 0;
     transition: all 0.4s ease;
     text-shadow: 0 0 5px var(--deep-ocean);
+    pointer-events: none;
 }
 
 .container-btn-sidebar-direita button::before {
@@ -871,7 +935,6 @@ body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
 
 .add img {
     height: 40px;
-    filter: drop-shadow(var(--deep-ocean));
 }
 
 .btn-fechar {
@@ -881,7 +944,7 @@ body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
 .open-sidebar img {
     height: 40px;
     width: 40px;
-    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 5));
+    transition: all 0.4s ease;
 }
 
 .btn-confirmar {
@@ -934,11 +997,10 @@ input::placeholder,
 .chat-contatos {
     display: none;
     flex-direction: column-reverse;
-    align-items: center;
-    justify-content: start;
     width: 100%;
     padding: 0 10px;
     gap: 10px;
+    min-height: 0;
     overflow-y: auto;
 }
 
@@ -964,6 +1026,16 @@ input::placeholder,
     height: 35px;
 }
 
+#sem-contatos {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    margin: auto;
+    text-shadow: 0 0 10px var(--deep-ocean), 0 0 5px var(--aqua-dark);
+    transition: all 0.4s ease;
+}
+
 /* geral */
 
 button {
@@ -975,7 +1047,13 @@ button {
     justify-content: center;
     align-items: center;
     outline: none;
+    font-family: "Outfit", sans-serif;
+    font-weight: 600;
     transition: all 0.4s ease;
+}
+
+span, p {
+    font-weight: 400;
 }
 
 textarea,
@@ -988,7 +1066,21 @@ input {
     outline: none;
     resize: none;
     width: 100%;
+    font-family: "Outfit", sans-serif;
+    font-weight: 400;
     transition: all 0.4s ease;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    pointer-events: none;
+}
+
+img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
 }
 
 /* Inputs */
@@ -1042,8 +1134,8 @@ input:hover,
     }
 }
 
-#BtnFecharModal:hover {
-    filter: brightness(0.8);
+.BtnFecharModal:hover {
+    filter: brightness(0.5);
 }
 
 .contato-rapido:hover {
@@ -1072,6 +1164,18 @@ input:hover,
 }
 
 
+body.SpanMusica #sem-musica {
+    display: block;
+}
+
+@starting-style {
+    #sem-musica {
+        opacity: 0;
+        scale: 0.7;
+    }
+}
+
+
 body.visualizar {
     backdrop-filter: none;
 }
@@ -1096,31 +1200,40 @@ body.visualizar .view {
 
 
 body.sidebar main {
-    grid-template-columns: auto 1fr 220px;
+    grid-template-columns: auto 1fr 250px;
 }
 
 body.sidebar .sidebar-direita {
-    width: 220px;
+    width: 250px;
 }
 
 body.sidebar .container-btn-sidebar-direita button,
-body.sidebar .add,
-body.sidebar .input-area-pesquisar {
+body.sidebar.chat .add,
+body.sidebar.chat .input-area-pesquisar,
+body.sidebar.chat #sem-contatos {
+    display: flex;
     opacity: 1;
+    pointer-events: auto;
+}
+
+body.sidebar.chat .title-contatos {
+    display: block;
 }
 
 body.sidebar .contato {
     opacity: 1;
 }
 
+body.sidebar .open-sidebar img {
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 5));
 
-body.chat .add {
-    display: block;
 }
 
-body.chat .input-area-pesquisar {
-    display: flex;
+
+body.chat {
+    backdrop-filter: blur(4px);
 }
+
 
 body.chat .view {
     opacity: 0;
@@ -1151,6 +1264,10 @@ body.chat article {
     transform: translateY(0);
     scale: 1;
     pointer-events: auto;
+}
+
+body.chat .chat-apresentacao {
+    animation: ApresentaçãoChat 0.7s ease forwards;
 }
 
 body.chat .container-nota {
@@ -1187,17 +1304,6 @@ body.SelecionarContato .item {
     transition: all 1s;
 }
 
-.aviso-erro::after {
-    content: "";
-    position: absolute;
-    width: 10%;
-    height: 20px;
-    bottom: 47.5px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    clip-path: polygon(100% 50%, 0 0, 0 100%);
-}
-
 .aviso-erro::before {
     content: "";
     position: absolute;
@@ -1220,15 +1326,15 @@ body.SelecionarContato .item {
 /* Classes de easter eggs */
 
 body.EasterEgg-Evilaero {
-    background-image: url(Imagens/Fundo\ Evil\ aero.webp);
+    background-image: url(../Imagens/Fundo\ Evil\ aero.webp);
 }
 
 body.EasterEgg-WindowsXP {
-    background-image: url(Imagens/Windows\ XP.jpeg);
+    background-image: url(../Imagens/Windows\ XP.jpeg);
 }
 
 body.EasterEgg-WindowsVista {
-    background-image: url(Imagens/WIndows\ Vista.jpg);
+    background-image: url(../Imagens/WIndows\ Vista.jpg);
 }
 
 
@@ -1299,7 +1405,19 @@ body.EasterEgg-span #span-relogio {
 }
 
 body:not(:has(.contato)) .contato-sair {
-    display: none; /* resolver */
+    display: none
+}
+
+body:has(.contato) #sem-contatos {
+    display: none !important;
+}
+
+body:not(:has(.contato)) .input-area-pesquisar {
+    display: none !important;
+}
+
+.lista-contatos:has(label) .sem-contato {
+    display: none;
 }
 
 /* modal */
@@ -1355,6 +1473,7 @@ dialog::before {
     top: 0;
     border-radius: 20px;
     background: var(--reflection);
+    pointer-events: none;
 }
 
 @starting-style {
@@ -1363,6 +1482,7 @@ dialog::before {
         opacity: 0;
         scale: 0.8;
     }
+
     dialog::backdrop {
         backdrop-filter: blur(0) brightness(1) saturate(1);
     }
@@ -1412,6 +1532,13 @@ form {
     height: 50%;
     background: var(--reflection);
     pointer-events: none;
+}
+
+.sem-contato {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 /* scroll */
