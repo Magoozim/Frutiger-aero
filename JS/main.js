@@ -8,7 +8,7 @@ const OpenSidebar = document.getElementById("OpenSidebar")
 const TemplateNota = document.getElementById("TemplateNota");
 const TemplateContato = document.getElementById("TemplateContato");
 const ModalNota = document.getElementById("ModalNota");
-export const Notas = document.getElementById("notas");
+const Notas = document.getElementById("notas");
 const InputTitulo = document.getElementById("input-titulo");
 const InputNota = document.getElementById("input-nota");
 
@@ -44,8 +44,6 @@ const BtnCriarGrupo = document.getElementById("BtnCriarGrupo");
 
 const InputPesquisar = document.getElementById("input-pesquisar");
 
-const Title = document.getElementById("Title");
-
 // Arrays
 
 const contatos = []
@@ -54,6 +52,8 @@ let ContatoAtual = null;
 let ContatoSelecionado = null;
 
 let membrosSelecionados = [];
+
+const posicaoWidget = { relogio: 0, calendario: 1, nota: 2, musica: 3 };
 
 // funções
 
@@ -86,6 +86,7 @@ function NovaNota() {
 
     const titulo = clone.querySelector("h2");
     const notaTexto = clone.querySelector(".nota-texto");
+    const link = clone.querySelector(".link-magoozim");
     const btnMais = clone.querySelector(".btn-mais");
     const btnEditar = clone.querySelector(".btn-editar");
     const btnExcluir = clone.querySelector(".btn-excluir");
@@ -111,7 +112,7 @@ function NovaNota() {
         ModalNota.showModal();
     });
 
-    EasterEggsNotas(valor, notaTexto, containerNota);
+    EasterEggsNotas(valor, notaTexto, link, containerNota);
 
     Notas.appendChild(clone);
 }
@@ -245,6 +246,7 @@ setInterval(data, 1000);
             ModalNota.close();
             FormNota.reset();
             DivWidgets.dataset.widget = "nota"
+            DivWidgets.style.setProperty("--eixo-x", posicaoWidget.nota);
         }
         else if (FormModal === FormContato) {
             CriarContato();
@@ -267,6 +269,7 @@ InputNota.addEventListener("keydown", (e) => {
         ModalNota.close();
         FormNota.reset();
         DivWidgets.dataset.widget = "nota"
+        DivWidgets.style.setProperty("--eixo-x", posicaoWidget.nota);
     }
 });
 
@@ -289,15 +292,16 @@ InputMensagemChat.addEventListener("keydown", (e) => {
 
 document.querySelectorAll(".header-widget button").forEach((BtnWidget) => {
     BtnWidget.addEventListener("click", () => {
+        let widget = null;
 
-        if (BtnWidget.classList.contains("btn-relogio")) {
-            DivWidgets.dataset.widget = "relogio"
-        }
-        else if (BtnWidget.classList.contains("btn-calendario")) {
-            DivWidgets.dataset.widget = "calendario"
-        }
-        else if (BtnWidget.classList.contains("btn-nota")) {
-            DivWidgets.dataset.widget = "nota"
+        if (BtnWidget.classList.contains("btn-relogio")) widget = "relogio";
+        else if (BtnWidget.classList.contains("btn-calendario")) widget = "calendario";
+        else if (BtnWidget.classList.contains("btn-nota")) widget = "nota";
+        else if (BtnWidget.classList.contains("btn-musica")) widget = "musica";
+
+        if (widget) {
+            DivWidgets.dataset.widget = widget;
+            DivWidgets.style.setProperty("--eixo-x", posicaoWidget[widget]);
         }
     })
 });
@@ -308,9 +312,11 @@ document.querySelectorAll(".nav-btn button").forEach((BtnNav) => {
     BtnNav.addEventListener("click", () => {
         if (BtnNav.classList.contains("btn-mensagens")) {
             body.classList.add("chat")
+            DivWidgets.style.setProperty("--modo-chat", 1);
         }
         else if (BtnNav.classList.contains("btn-menu")) {
             body.classList.remove("chat")
+            DivWidgets.style.setProperty("--modo-chat", 0);
         }
     })
 });
@@ -324,7 +330,7 @@ OpenSidebar.addEventListener("click", () => {
 // Mensagem rápida
 
 document.getElementById("mensagem-rapida").addEventListener("click", () => {
-    ContatosMensagemRapida.querySelectorAll("contato-rapido").forEach(el => el.remove());
+    ContatosMensagemRapida.querySelectorAll(".contato-rapido").forEach(el => el.remove());
 
     contatos.forEach(contato => {
         const clone = TemplateContatoRapido.content.cloneNode(true);
@@ -391,7 +397,7 @@ InputNota.addEventListener("input", () => {
 // Criar grupo
 
 BtnCriarGrupo.addEventListener("click", () => {
-    ContatosGrupo.querySelectorAll("contato-grupo").forEach(el => el.remove());
+    ContatosGrupo.querySelectorAll(".contato-grupo").forEach(el => el.remove());
     membrosSelecionados = [];
 
     contatos.forEach(contato => {

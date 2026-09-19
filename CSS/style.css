@@ -482,51 +482,31 @@ main {
     display: flex;
     flex-direction: row;
     overflow: hidden;
+    width: 250px;
 }
 
-/* data-widgets */
-
-.widget-visualizações[data-widget="calendario"] .container-calendario {
-    transform: translateX(-100%);
-    opacity: 1;
+.widget-visualizações > div {
+    flex-shrink: 0;
+    transition: all 0.4s ease;
 }
 
-body.chat .widget-visualizações[data-widget="calendario"] .container-calendario {
-    transform: translateY(-100%);
-    opacity: 1;
-}
+.widget-visualizações > div:nth-child(1) { --minha-posicao: 0; } /* relógio */
+.widget-visualizações > div:nth-child(2) { --minha-posicao: 1; } /* calendário */
+.widget-visualizações > div:nth-child(3) { --minha-posicao: 2; } /* nota */
+.widget-visualizações > div:nth-child(4) { --minha-posicao: 3; } /* música */
 
-.widget-visualizações[data-widget="calendario"] .container-relogio {
-    transform: translateX(-110%);
-    opacity: 0;
-}
+.widget-visualizações > div {
+    --diferenca: calc(var(--eixo-x, 0) - var(--minha-posicao, 0));
 
-body.chat .widget-visualizações[data-widget="calendario"] .container-relogio {
-    transform: translateY(-110%);
-    opacity: 0;
-}
+    transform: translate(
+        calc(
+            (1 - var(--modo-chat, 0)) * var(--eixo-x, 0) * -100%
+            + var(--modo-chat, 0) * var(--minha-posicao, 0) * -100%
+        ),
+        calc(var(--modo-chat, 0) * var(--diferenca) * -100%)
+    );
 
-
-.widget-visualizações[data-widget="nota"] .container-nota {
-    transform: translateX(-200%);
-    opacity: 1;
-}
-
-body.chat .widget-visualizações[data-widget="nota"] .container-nota {
-    transform: translateY(-200%);
-    opacity: 1;
-}
-
-.widget-visualizações[data-widget="nota"] .container-calendario,
-.widget-visualizações[data-widget="nota"] .container-relogio {
-    transform: translateX(-210%);
-    opacity: 0;
-}
-
-body.chat .widget-visualizações[data-widget="nota"] .container-calendario,
-body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
-    transform: translateY(-210%);
-    opacity: 0;
+    opacity: calc(1 - min(var(--diferenca) * var(--diferenca), 1));
 }
 
 /* resto do código */
@@ -546,7 +526,6 @@ body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
     align-items: center;
     position: relative;
     transition: all 0.4s ease;
-    transform: translate(0, 0);
 }
 
 .container-relogio::before {
@@ -586,9 +565,7 @@ body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
     justify-content: center;
     align-items: center;
     position: relative;
-    opacity: 0;
     transition: all 0.4s ease;
-    transform: translate(0, 0);
 }
 
 .container-calendario::before {
@@ -617,9 +594,7 @@ body.chat .widget-visualizações[data-widget="nota"] .container-relogio {
     display: flex;
     flex-direction: column;
     position: relative;
-    opacity: 0;
     transition: all 0.4s ease;
-    transform: translate(-100%, 0);
     overflow-y: auto;
 }
 
@@ -1246,12 +1221,6 @@ body.chat .container-musica {
     scale: 0.95;
 }
 
-body.chat .widget-visualizações {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
 body.chat .container-btn-sidebar-direita {
     opacity: 0;
     scale: 0.90;
@@ -1268,10 +1237,6 @@ body.chat article {
 
 body.chat .chat-apresentacao {
     animation: ApresentaçãoChat 0.7s ease forwards;
-}
-
-body.chat .container-nota {
-    transform: translate(0, -100%);
 }
 
 body.chat .chat-contatos {

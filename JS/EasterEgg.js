@@ -1,4 +1,4 @@
-import { body, Notas } from "./main.js";
+import { body } from "./main.js";
 
 const Windows7 = document.getElementById("windows-7");
 const enchendo = document.getElementById("enchendo");
@@ -10,7 +10,12 @@ const WindowsXP = document.getElementById("windows-XP");
 const ContainerRelogio = document.getElementById("container-relogio");
 const SpanRelogio = document.getElementById("span-relogio");
 
-export function EasterEggsNotas(valor, nota, ContainerNota) {
+export function EasterEggsNotas(valor, nota, link, ContainerNota) {
+    if (valor === "magoozim") {
+        nota.style.display = "none"
+        link.style.display = "block"
+    }
+
     if (valor === "what's evil aero?") {
         ContainerNota.remove();
         body.style.display = "none"
