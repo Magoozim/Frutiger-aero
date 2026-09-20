@@ -15,7 +15,7 @@
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
-        min-height: 100dvh;
+        height: 100dvh;
         overscroll-behavior: none;
         display: grid;
         overflow: hidden;
@@ -128,17 +128,21 @@
     .widget-visualizações {
         position: fixed;
         top: 100%;
-        width: 100%;
-        overflow: hidden;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 95dvw;
+        max-width: 350px;
+        height: 250px;
         z-index: 60;
-        transition: all 0.5s ease;
+        transition: top 0.5s ease;
     }
 
     .widget-visualizações > div {
-        min-width: 0;
-        width: 95%;
-        max-width: 100%;
-        flex-shrink: 0;
+        width: 100%;
+        transform: translate(
+            calc(var(--minha-posicao, 0) * -100%),
+            calc(var(--diferenca, 0) * -100%)
+        );
     }
 
     .overlay-widget {
@@ -204,9 +208,6 @@
 
     .container-musica-widget {
         display: grid;
-        opacity: 0;
-        transform: translate(-200%, 0);
-        transition: all 0.4s ease;
         background-color: rgba(255, 255, 255, 0.16);
         border: 1px solid rgba(255, 255, 255, 0.35);
         border-radius: 20px;
@@ -335,7 +336,7 @@
         font-size: 16px;
     }
 
-    .widget-visualizações div:hover {
+    .widget-visualizações > div:hover {
         box-shadow: none;
     }
 
@@ -343,10 +344,6 @@
 
     .nav-btn.btn-deslizante::before {
         right: 5px;
-    }
-
-    body.chat .container-nota {
-        transform: translate(-100%, 0);
     }
 
     body.sidebar main {
@@ -384,22 +381,6 @@
     body.widget article {
         filter: blur(10px);
         pointer-events: none;
-    }
-
-    body.musica .container-musica-widget {
-        opacity: 1;
-        transform: translate(-300%, 0);
-    }
-
-    body.musica .container-relogio,
-    body.musica .container-calendario,
-    body.musica .container-nota {
-        transform: translate(-310%, 0);
-    }
-
-    body.nota .container-nota {
-        transform: translate(-200%, 0);
-        opacity: 1;
     }
 
 
@@ -555,7 +536,7 @@
 
         .widget-visualizações > div {
             height: 100%;
-            width: 98%;
+            width: 90%;
         }
 
         #horario,

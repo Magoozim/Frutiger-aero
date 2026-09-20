@@ -4,7 +4,7 @@ import { EasterEggsNotas } from "./EasterEgg.js";
 
 const DivWidgets = document.getElementById("widget-visualizações");
 export const body = document.body;
-const OpenSidebar = document.getElementById("OpenSidebar")
+const OpenSidebar = document.querySelectorAll(".open-sidebar")
 const TemplateNota = document.getElementById("TemplateNota");
 const TemplateContato = document.getElementById("TemplateContato");
 const ModalNota = document.getElementById("ModalNota");
@@ -35,7 +35,6 @@ const TemplateContatoRapido = document.getElementById("TemplateContatoRapido");
 
 const View = document.getElementById("view");
 
-const ModalGrupo = document.getElementById("ModalGrupo");
 const FormGrupo = document.getElementById("FormGrupo");
 const InputNomeGrupo = document.getElementById("input-grupo");
 const ContatosGrupo = document.getElementById("ContatosGrupo");
@@ -58,8 +57,7 @@ const posicaoWidget = { relogio: 0, calendario: 1, nota: 2, musica: 3 };
 // funções
 
 function EhMobile() {
-    window.innerWidth < 769;
-    return;
+    return window.innerWidth < 769;
 }
 
 function relogio() {
@@ -140,8 +138,10 @@ function CriarContato() {
         FotoPerfilContato.style.display = "block";
         document.querySelector(".chat-apresentacao").style.display = "none";
         document.querySelector(".comeco-conversa").style.display = "flex";
+        if (EhMobile()) {
+            body.classList.remove("sidebar");
+        }
         RenderizarMensagens();
-        body.classList.add("chat");
     });
 
     ChatContato.appendChild(clone);
@@ -223,15 +223,12 @@ function CriarGrupo() {
         document.querySelector(".chat-apresentacao").style.display = "none";
         document.querySelector(".comeco-conversa").style.display = "flex";
         RenderizarMensagens();
-        body.classList.add("chat");
     });
 
     ChatContato.appendChild(clone);
 }
 
 // rodar funções
-
-EhMobile();
 
 relogio();
 setInterval(relogio, 1000);
@@ -298,10 +295,19 @@ document.querySelectorAll(".header-widget button").forEach((BtnWidget) => {
         else if (BtnWidget.classList.contains("btn-calendario")) widget = "calendario";
         else if (BtnWidget.classList.contains("btn-nota")) widget = "nota";
         else if (BtnWidget.classList.contains("btn-musica")) widget = "musica";
+        else if (BtnWidget.classList.contains("btn-fechar")) {
+            body.classList.remove("widget");
+            return;
+        }
 
         if (widget) {
             DivWidgets.dataset.widget = widget;
             DivWidgets.style.setProperty("--eixo-x", posicaoWidget[widget]);
+            body.classList.add("widget");
+
+            if (EhMobile() && body.classList.contains("sidebar")) {
+                body.classList.remove("sidebar");
+            }
         }
     })
 });
@@ -323,9 +329,15 @@ document.querySelectorAll(".nav-btn button").forEach((BtnNav) => {
 
 // Abrir sidebar
 
-OpenSidebar.addEventListener("click", () => {
-    body.classList.toggle("sidebar")
-});
+OpenSidebar.forEach((BtnSidebar) => {
+    BtnSidebar.addEventListener("click", () => {
+        body.classList.toggle("sidebar")
+
+        if (EhMobile() && body.classList.contains("sidebar")) {
+            body.classList.remove("widget");
+        }
+    });
+})
 
 // Mensagem rápida
 
@@ -426,23 +438,20 @@ BtnCriarGrupo.addEventListener("click", () => {
 
 // sair do contato
 
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-        ContatoAtual = null
-        NomeContato.textContent = ""
-        ContainerMensagem.innerHTML = ""
-        FotoPerfilContato.src = ""
-    }
-});
-
-document.getElementById("ContatoSair").addEventListener("click", () => {
+function SairDoChat() {
     ContatoAtual = null;
     NomeContato.textContent = "";
     ContainerMensagem.innerHTML = "";
     FotoPerfilContato.style.display = "none";
     document.querySelector(".chat-apresentacao").style.display = "flex";
     document.querySelector(".comeco-conversa").style.display = "none";
-})
+}
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") SairDoChat();
+});
+
+document.getElementById("ContatoSair").addEventListener("click", SairDoChat);
 
 // Filtrar pesquisa
 
