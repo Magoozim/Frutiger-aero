@@ -4,7 +4,7 @@ import { EasterEggsNotas } from "./EasterEgg.js";
 
 const DivWidgets = document.getElementById("widget-visualizações");
 export const body = document.body;
-const OpenSidebar = document.querySelectorAll(".open-sidebar")
+const OpenSidebar = document.getElementById("OpenSidebar")
 const TemplateNota = document.getElementById("TemplateNota");
 const TemplateContato = document.getElementById("TemplateContato");
 const ModalNota = document.getElementById("ModalNota");
@@ -46,6 +46,7 @@ const InputPesquisar = document.getElementById("input-pesquisar");
 // Arrays
 
 const contatos = []
+let notas = []
 let ContatoAtual = null;
 
 let ContatoSelecionado = null;
@@ -76,10 +77,26 @@ function data(agora) {
     document.getElementById("data").textContent = `${dia}/${mes}/${ano}`;
 }
 
+function GerarId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2);
+}
+
 function NovaNota() {
     const valor = InputNota.value.trim();
     const valortitulo = InputTitulo.value.trim();
 
+    const nota = {
+        id: GerarId(),
+        titulo: valortitulo || "Sem Título",
+        texto: valor
+    };
+
+    notas.push(nota);
+    RenderizarNota(nota);
+    SalvarDados();
+}
+
+function RenderizarNota(nota) {
     const clone = TemplateNota.content.cloneNode(true);
 
     const titulo = clone.querySelector("h2");
@@ -90,9 +107,8 @@ function NovaNota() {
     const btnExcluir = clone.querySelector(".btn-excluir");
     const containerNota = clone.querySelector(".container-notas");
 
-
-    titulo.textContent = valortitulo || "Sem Título";
-    notaTexto.textContent = valor;
+    titulo.textContent = nota.titulo;
+    notaTexto.textContent = nota.texto;
 
     btnMais.addEventListener("click", () => {
         notaTexto.classList.toggle("expandida");
@@ -101,16 +117,20 @@ function NovaNota() {
 
     btnExcluir.addEventListener("click", () => {
         containerNota.remove();
+        notas = notas.filter(n => n.id !== nota.id);
+        SalvarDados();
     });
 
     btnEditar.addEventListener("click", () => {
-        InputTitulo.value = titulo.textContent === "Sem Título" ? "" : titulo.textContent;
-        InputNota.value = notaTexto.textContent;
+        InputTitulo.value = nota.titulo === "Sem Título" ? "" : nota.titulo;
+        InputNota.value = nota.texto;
         containerNota.remove();
+        notas = notas.filter(n => n.id !== nota.id);
+        SalvarDados();
         ModalNota.showModal();
     });
 
-    EasterEggsNotas(valor, notaTexto, link, containerNota);
+    EasterEggsNotas(nota.texto, notaTexto, link, containerNota);
 
     Notas.appendChild(clone);
 }
@@ -121,26 +141,30 @@ function CriarContato() {
 
     const contato = { nome, numero, mensagens: [] };
     contatos.push(contato);
+    RenderizarItemContato(contato);
+    SalvarDados();
+}
 
+function RenderizarItemContato(item) {
     const clone = TemplateContato.content.cloneNode(true);
 
-    const Titulo = clone.querySelector("h4");
-    const item = clone.querySelector(".contato");
-    const Foto = clone.querySelector("#FotoDePerfil");
+    const titulo = clone.querySelector("h4");
+    const el = clone.querySelector(".contato");
+    const foto = clone.querySelector("#FotoDePerfil");
 
-    Titulo.textContent = nome || numero;
-    Foto.src = "Imagens/Icon1.webp";
+    const ehGrupo = !!item.membros;
 
-    item.addEventListener("click", () => {
-        ContatoAtual = contato;
-        NomeContato.textContent = contato.nome || contato.numero;
-        FotoPerfilContato.src = "Imagens/Icon1.webp"
+    titulo.textContent = item.nome || item.numero;
+    foto.src = ehGrupo ? "Windows 7 Icons/397.png" : "Imagens/Icon1.webp";
+    if (ehGrupo) el.classList.add("grupo");
+
+    el.addEventListener("click", () => {
+        ContatoAtual = item;
+        NomeContato.textContent = item.nome || item.numero;
+        FotoPerfilContato.src = foto.src;
         FotoPerfilContato.style.display = "block";
         document.querySelector(".chat-apresentacao").style.display = "none";
         document.querySelector(".comeco-conversa").style.display = "flex";
-        if (EhMobile()) {
-            body.classList.remove("sidebar");
-        }
         RenderizarMensagens();
     });
 
@@ -175,6 +199,7 @@ function Mensagem() {
     ContatoAtual.mensagens.push(texto);
 
     CriarBalao(texto);
+    SalvarDados();
 }
 
 function RenderizarMensagens() {
@@ -190,6 +215,8 @@ function MensagemRapida() {
     if (ContatoSelecionado === ContatoAtual) {
         CriarBalao(texto);
     }
+
+    SalvarDados();
 }
 
 function AtualizarValidadeGrupo() {
@@ -205,30 +232,35 @@ function CriarGrupo() {
 
     const grupo = { nome, membros: [...membrosSelecionados], mensagens: [] };
     contatos.push(grupo);
+    RenderizarItemContato(grupo);
+    SalvarDados();
+}
 
-    const clone = TemplateContato.content.cloneNode(true);
-    const titulo = clone.querySelector("h4");
-    const Foto = clone.querySelector("#FotoDePerfil");
-    const item = clone.querySelector(".contato");
+function SalvarDados() {
+    localStorage.setItem("nimbus-contatos", JSON.stringify(contatos));
+    localStorage.setItem("nimbus-notas", JSON.stringify(notas));
+}
 
-    titulo.textContent = grupo.nome;
-    Foto.src = "Windows 7 Icons/397.png";
-    item.classList.add("grupo");
+function CarregarDados() {
+    const contatosSalvos = localStorage.getItem("nimbus-contatos");
+    const notasSalvas = localStorage.getItem("nimbus-notas");
 
-    item.addEventListener("click", () => {
-        ContatoAtual = grupo;
-        NomeContato.textContent = grupo.nome;
-        FotoPerfilContato.src = "Windows 7 Icons/397.png";
-        FotoPerfilContato.style.display = "block";
-        document.querySelector(".chat-apresentacao").style.display = "none";
-        document.querySelector(".comeco-conversa").style.display = "flex";
-        RenderizarMensagens();
-    });
+    if (contatosSalvos) {
+        JSON.parse(contatosSalvos).forEach(item => {
+            contatos.push(item);
+            RenderizarItemContato(item);
+        });
+    }
 
-    ChatContato.appendChild(clone);
+    if (notasSalvas) {
+        notas = JSON.parse(notasSalvas);
+        notas.forEach(nota => RenderizarNota(nota));
+    }
 }
 
 // rodar funções
+
+CarregarDados();
 
 relogio();
 setInterval(relogio, 1000);
@@ -329,15 +361,13 @@ document.querySelectorAll(".nav-btn button").forEach((BtnNav) => {
 
 // Abrir sidebar
 
-OpenSidebar.forEach((BtnSidebar) => {
-    BtnSidebar.addEventListener("click", () => {
-        body.classList.toggle("sidebar")
+OpenSidebar.addEventListener("click", () => {
+    body.classList.toggle("sidebar")
 
-        if (EhMobile() && body.classList.contains("sidebar")) {
-            body.classList.remove("widget");
-        }
-    });
-})
+    if (EhMobile() && body.classList.contains("sidebar")) {
+        body.classList.remove("widget");
+    }
+});
 
 // Mensagem rápida
 
